@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+rm -r doc js
+
+echo COMPILE
+coffee  --compile --output js src/*.coffee src/*/*.coffee
+echo LINT
+coffeelint -f script/lintConfig.json src/*.coffee
+echo DOCUMENT
+mkdir doc doc/project
+script/NaturalDocs-1.52/NaturalDocs \
+	--input src \
+	--output HTML doc \
+	--project doc/project \
+	--rebuild
+
+

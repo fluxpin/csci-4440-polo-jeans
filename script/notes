@@ -1,0 +1,23 @@
+all scripts should be run from project directory
+
+NaturalDocs-1.52/Config/Languages has been modified to support CoffeeScript:
+Language: CoffeeScript
+
+   Extension: coffee
+   Line Comment: #
+   Block Comment: ### ###
+   Package Separator: .
+   Function Prototype Enders: -> \n
+   Variable Prototype Ender: \n
+
+Topics has been modified to make a "trait" topic:
+Topic Type: Trait
+
+   Plural: Traits
+   Scope: Start
+   Class Hierarchy: Yes
+   Page Title If First: Yes
+   Can Group With: Classes, Interfaces
+
+   Keywords:
+      trait, traits
