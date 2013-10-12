@@ -18,23 +18,23 @@ Class: Number
 ###
 
 ###
-Function: floor
+Method: floor
 Biggest integer no bigger than me.
 ###
 ###
-Function: ceil
+Method: ceil
 Smallest integer no smaller than me.
 ###
 ###
-Function: cos
+Method: cos
 Cosine.
 ###
 ###
-Function: sin
+Method: sin
 Sine.
 ###
 ###
-Function: abs
+Method: abs
 Force a number to be positive.
 ###
 #
@@ -43,7 +43,7 @@ Force a number to be positive.
 		Math[name] @
 Number.prototype.extend
 	###
-	Func: crop
+	Method: crop
 	Push this to be within [inclusive] a min and max.
 	###
 	crop: (min, max) ->
@@ -57,21 +57,21 @@ Number.prototype.extend
 			@valueOf()
 
 	###
-	Func: diff
+	Method: diff
 	Distance between two numbers.
 	###
 	diff: (x) ->
 		(@ - x).abs()
 
 	###
-	Func: oppositeSign
+	Method: oppositeSign
 	Whether two numbers are on different sides of zero.
 	###
 	oppositeSign: (oth) ->
 		(@ * oth) < 0
 
 	###
-	Func: scaleFrom
+	Method: scaleFrom
 	A value on a scale from oldMin -- oldMax
 		is moved to a scale from newMin -- newMax
 	###
@@ -82,7 +82,7 @@ Number.prototype.extend
 		newMin + zeroToOne * (newMax - newMin)
 
 	###
-	Func: scaleCropped
+	Method: scaleCropped
 	Scale a number from one range to another.
 	If this leaves it outside of the new range, crop it.
 	###
@@ -90,14 +90,14 @@ Number.prototype.extend
 		(@scaleFrom oldMin, oldMax, newMin, newMax).crop newMin, newMax
 
 	###
-	Func: square
+	Method: square
 	Product of a number and itself.
 	###
 	square: ->
 		@ * @
 
 	###
-	Func: toIntString
+	Method: toIntString
 	Number rounded to an int and stringified.
 	###
 	toIntString: ->

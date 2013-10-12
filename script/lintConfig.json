@@ -50,7 +50,7 @@
         "level": "ignore"
     },
     "no_empty_param_list": {
-        "level": "ignore"
+        "level": "error"
     },
     "space_operators": {
         "level": "error"

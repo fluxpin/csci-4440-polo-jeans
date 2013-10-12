@@ -3,8 +3,10 @@ rm -r doc js
 
 echo COMPILE
 coffee  --compile --output js src
+
 echo LINT
-coffeelint -f script/lintConfig.json src/*.coffee
+coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee
+
 echo DOCUMENT
 mkdir doc doc/project
 script/NaturalDocs-1.52/NaturalDocs \
@@ -12,6 +14,7 @@ script/NaturalDocs-1.52/NaturalDocs \
 	--output HTML doc \
 	--project doc/project \
 	--rebuild
+
 echo MAKE TEST.HTML
 script/generateTestHtml
 
