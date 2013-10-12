@@ -1,2 +1,2 @@
 #!/usr/bin/sh
-coffee --watch --compile --output js src/*.coffee src/*/*.coffee
+coffee --watch --compile --output js src

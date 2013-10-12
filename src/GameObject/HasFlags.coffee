@@ -36,8 +36,7 @@ class HasFlags
 		flags.some @am
 
 
-
-if TEST
+describe 'flags', ->
 	class SampleHasFlags
 		@does HasFlags
 
@@ -54,7 +53,5 @@ if TEST
 			expect(@am 'a').toEqual no
 			expect(@am 'b').toEqual yes
 
-
-	describe 'flags', ->
-		it 'works', ->
-			(new SampleHasFlags).test()
+	it 'works', ->
+		(new SampleHasFlags).test()

@@ -14,7 +14,12 @@ class HasState
 	be: (state) ->
 		@state = state
 
-if TEST
+
+
+
+
+
+describe 'state', ->
 	class SampleHasState
 		@does HasState
 
@@ -34,7 +39,6 @@ if TEST
 			expect(@state).toEqual 'on'
 			@toggle()
 			expect(@state).toEqual 'off'
-	
-	describe 'state', ->
-		it 'works', ->
-			(new SampleHasState).test()
+
+	it 'works', ->
+		(new SampleHasState).test()

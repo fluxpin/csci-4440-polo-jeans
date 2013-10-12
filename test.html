@@ -3,56 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-
 	<script src='lib/jasmine-1.3.0/jasmine.js'></script>
 	<script src='lib/jasmine-1.3.0/jasmine-html.js'></script>
 	<link rel='stylesheet' type='text/css' href='lib/jasmine-1.3.0/jasmine.css'>
 
-	<!-- Metaprogramming must come first! -->
-	<script src='js/globals.js'></script>
-	<script src='js/trait.js'></script>
-
+	<!--Meta-programming first-->
+	<script src='js/metaProgramming/globals.js'></script>
+	<script src='js/metaProgramming/trait.js'></script>
+	
+	<script src='js/GameObject/GameObject.js'></script>
+	<script src='js/GameObject/HasFlags.js'></script>
+	<script src='js/GameObject/HasState.js'></script>
 	<script src='js/number.js'></script>
-
-	<script src='js/HasFlags.js'></script>
-	<script src='js/HasState.js'></script>
-
-
-	<script type="text/javascript">
-		(function() {
-		var jasmineEnv = jasmine.getEnv();
-		jasmineEnv.updateInterval = 1000;
-
-		var htmlReporter = new jasmine.HtmlReporter();
-
-		jasmineEnv.addReporter(htmlReporter);
-
-		jasmineEnv.specFilter = function(spec) {
-			return htmlReporter.specFilter(spec);
-		};
-
-		var currentWindowOnload = window.onload;
-
-		window.onload = function() {
-			if (currentWindowOnload) {
-			currentWindowOnload();
-			}
-			execJasmine();
-		};
-
-		function execJasmine() {
-			jasmineEnv.execute();
-		}
-
-		})();
-	</script>
-
+	<script src='js/test.js'></script>
 </head>
-
 
 <body>
 
 
 </body>
-
 </html>
