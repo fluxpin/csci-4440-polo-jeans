@@ -82,7 +82,7 @@ Topic Type: Class
    Scope: Start
    Class Hierarchy: Yes
    Page Title If First: Yes
-   Can Group With: Interfaces, Traits
+   Can Group With: Abstract Classes, Interfaces, Traits
 
    Keywords:
       class, classes
@@ -98,7 +98,7 @@ Topic Type: Interface
    Scope: Start
    Class Hierarchy: Yes
    Page Title If First: Yes
-   Can Group With: Classes, Traits
+   Can Group With: Abstract Classes, Classes, Traits
 
    Keywords:
       interface, interfaces
@@ -144,7 +144,7 @@ Topic Type: Function
 
    Plural: Functions
    Break Lists: Yes
-   Can Group With: Properties
+   Can Group With: Methods, Properties
 
    Keywords:
       function, functions
@@ -154,7 +154,6 @@ Topic Type: Function
       routine, routines
       subroutine, subroutines
       sub, subs
-      method, methods
       callback, callbacks
       constructor, constructors
       destructor, destructors
@@ -214,7 +213,7 @@ Topic Type: Variable
 Topic Type: Property
 
    Plural: Properties
-   Can Group With: Functions
+   Can Group With: Functions, Methods
 
    Keywords:
       property, properties
@@ -266,13 +265,23 @@ Topic Type: Delegate
       delegate, delegates
 
 
+Topic Type: Method
+
+   Plural: Methods
+   Break Lists: Yes
+   Can Group With: Functions, Properties
+
+   Keywords:
+      method, methods
+
+
 Topic Type: Trait
 
    Plural: Traits
    Scope: Start
    Class Hierarchy: Yes
    Page Title If First: Yes
-   Can Group With: Classes, Interfaces
+   Can Group With: Abstract Classes, Classes, Interfaces
 
    Keywords:
       trait, traits
@@ -392,3 +401,24 @@ Topic Type: Build Target
       target, targets
       build target, build targets
       buildtarget, buildtargets
+
+
+Topic Type: Class Method
+
+   Plural: Class Methods
+   Break Lists: Yes
+
+   Keywords:
+      class method, class methods
+
+
+Topic Type: Abstract Class
+
+   Plural: Abstract Classes
+   Scope: Start
+   Class Hierarchy: Yes
+   Page Title If First: Yes
+   Can Group With: Classes, Interfaces, Traits
+
+   Keywords:
+      abstract class, abstract classes

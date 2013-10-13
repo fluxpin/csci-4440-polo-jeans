@@ -292,5 +292,7 @@ Language: CoffeeScript
    Line Comment: #
    Block Comment: ### ###
    Package Separator: .
-   Function Prototype Enders: -> \n
+   Function Prototype Ender: \n
    Variable Prototype Ender: \n
+   Class Method Prototype Ender: \n
+   Method Prototype Ender: \n

@@ -1,5 +1,6 @@
 #!/usr/bin/sh
 rm -r doc js
+rm test.html
 
 echo COMPILE
 coffee  --compile --output js src
