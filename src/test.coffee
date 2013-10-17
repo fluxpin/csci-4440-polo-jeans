@@ -17,5 +17,5 @@ if TEST
 	currentWindowOnLoad = window.onload
 	window.onload = ->
 		if currentWindowOnLoad?
-			currentIndowOnlLoad()
+			currentWindowOnLoad()
 		jasmineEnv.execute()
