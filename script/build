@@ -1,6 +1,5 @@
 #!/usr/bin/sh
 rm -r doc js
-rm test.html
 
 echo COMPILE
 coffee  --compile --output js src
@@ -15,8 +14,5 @@ script/NaturalDocs-1.52/NaturalDocs \
 	--output HTML doc \
 	--project doc/project \
 	--rebuild
-
-echo MAKE TEST.HTML
-script/generateTestHtml
 
 
