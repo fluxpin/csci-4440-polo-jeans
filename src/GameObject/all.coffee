@@ -1,0 +1,16 @@
+define (require) ->
+	require 'meta'
+	require './CallsBack'
+	require './Inits'
+	require './GameObject'
+	require './HasAnimation'
+	require './HasFlags'
+	require './HasShape'
+	require './HasState'
+	require './Moves'
+
+	require './Controller'
+	require './ListensToControl'
+	require './Sprite'
+	require './MoveSprite'
+	require './Unique'
