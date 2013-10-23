@@ -1,0 +1,7 @@
+function isDown(key_code) 
+//key_code is integer code representing key user wants to check
+	if(event.keyCode==key_code) {
+		return true;
+	}
+  return false;
+}
