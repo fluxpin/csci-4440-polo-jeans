@@ -1,7 +1,4 @@
-function isDown(key_code) 
-//key_code is integer code representing key user wants to check
-	if(event.keyCode==key_code) {
-		return true;
-	}
-  return false;
-}
+isDown = (key_code) ->
+#key_code is integer code representing key user wants to check
+	true if event.keyCode is key_code
+	false
