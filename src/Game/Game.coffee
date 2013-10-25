@@ -14,7 +14,7 @@ define (require) ->
 		sync: 0
 
 		###
-		Constructor: constructor
+		Method: constructor
 		Creates a canvas in the provided div and initializes the global WebGL
 		context. Refer to the context with *gl* (eg *gl.clearColor*).
 

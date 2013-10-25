@@ -15,7 +15,7 @@ define ->
 		sync: 0
 
 		###
-		Constructor: constructor
+		Method: constructor
 		Asynchronously loads, processes, and returns resources via the provided
 		callback.
 

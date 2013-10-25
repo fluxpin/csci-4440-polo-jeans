@@ -5,7 +5,7 @@ define (require) ->
 	###
 	class TextureLoader extends require './Loader'
 		###
-		Constructor: constructor
+		Method: constructor
 		Asynchronously loads, configures, and returns textures via the provided
 		callback.
 

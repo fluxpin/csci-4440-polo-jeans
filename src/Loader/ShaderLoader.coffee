@@ -5,7 +5,7 @@ define (require) ->
 	###
 	class window.ShaderLoader extends require './Loader'
 		###
-		Constructor: constructor
+		Method: constructor
 		Asynchronously loads, compiles, and returns shaders via the provided
 		callback.
 
