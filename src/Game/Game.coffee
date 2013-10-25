@@ -30,7 +30,8 @@ define (require) ->
 			canvas.height = y
 			div.appendChild canvas
 
-			window.gl = canvas.getContext 'experimental-webgl'
+			window.gl = canvas.getContext('webgl') or
+			            canvas.getContext('experimental-webgl')
 			unless gl?
 				throw new Error div.innerHTML = 'Unable to initialize WebGL'
 			gl.clearColor 0.0, 0.0, 0.0, 1.0
@@ -110,7 +111,6 @@ define (require) ->
 				throw error
 
 		draw: ->
-			gl.viewport 0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight
 			gl.clear gl.COLOR_BUFFER_BIT
 
 			M.mat4.ortho pMatrix, 0.0, 8.0, 0.0, 6.0, -1.0, 1.0
