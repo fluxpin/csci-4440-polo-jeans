@@ -3,46 +3,39 @@ define (require) ->
 	TextureLoader = require 'Loader/TextureLoader'
 	M = require 'matrix'
 
-	glFromDiv = (div, width, height) ->
-		canvas = document.createElement 'canvas'
-		canvas.width = width
-		canvas.height = height
-		div.appendChild canvas
-
-		gl = (canvas.getContext 'webgl') or canvas.getContext 'experimental-webgl'
-		unless gl?
-			throw new Error (div.innerHTML = 'Unable to initialize WebGL')
-		gl.clearColor 0.0, 0.0, 0.0, 1.0
-		gl.clear gl.COLOR_BUFFER_BIT
-
-		[canvas, gl]
-
 	class Graphics
 		constructor: (div, width, height) ->
 			type width, Number
 			type height, Number
-			[@canvas, @gl] = glFromDiv div, width, height
+
+			@gl = @_glFromDiv div, width, height
+			# Projection, model, and view matrices
+			@pMatrix = M.mat4.create()
+			@mvMatrix = M.mat4.create()
 
 			@shaders = { }
 			@textures = { }
-
-			# Projection, model, and view matrices
-			@pMatrix = M.mat4.create()
-
-			@mvMatrix = M.mat4.create()
 
 		loadMatrices: (prog) ->
 			@gl.uniformMatrix4fv prog.pMatrix, false, @pMatrix
 			@gl.uniformMatrix4fv prog.mvMatrix, false, @mvMatrix
 
+		_glFromDiv: (div, width, height) ->
+			canvas = document.createElement 'canvas'
+			canvas.width = width
+			canvas.height = height
+			div.appendChild canvas
+
+			gl = (canvas.getContext 'webgl') or canvas.getContext 'experimental-webgl'
+			unless gl?
+				throw new Error (div.innerHTML = 'Unable to initialize WebGL')
+			gl.clearColor 0.0, 0.0, 0.0, 1.0
+			gl.clear gl.COLOR_BUFFER_BIT
+			gl
 
 		initLoaders: (onAllLoaded) ->
-			# What does this mean? Not 1, not 3, and 4 is absolutely out of the question!
 			@sync = 2
 
-			# TODO:
-			# Why are we constructing things but not referencing them ?
-			# What if @onAllLoaded is called twice?
 			new ShaderLoader @gl, (shader, entry, done) =>
 				#type shader, ?
 				type entry, Object
@@ -94,10 +87,10 @@ define (require) ->
 			@square = @gl.createBuffer()
 			@gl.bindBuffer @gl.ARRAY_BUFFER, @square
 			@gl.bufferData @gl.ARRAY_BUFFER, new Float32Array([
-				1.0,  1.0,
-				-1.0,  1.0,
-				1.0, -1.0,
-				-1.0, -1.0
+				100.0,  100.0,
+				-100.0,  100.0,
+				100.0, -100.0,
+				-100.0, -100.0
 			]), @gl.STATIC_DRAW
 			@square.size = 4
 
@@ -109,12 +102,3 @@ define (require) ->
 				1.0, 0.0,
 				0.0, 0.0
 			]), @gl.STATIC_DRAW
-
-		initFrame: ->
-			@gl.clear @gl.COLOR_BUFFER_BIT
-
-			M.mat4.ortho @pMatrix, 0.0, 8.0, 0.0, 6.0, -1.0, 1.0
-
-
-
-

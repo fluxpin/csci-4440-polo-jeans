@@ -6,9 +6,6 @@ define (require) ->
 	Game = require './Game/Game'
 
 	testGame: (div) ->
-		state =
-			new (require 'GameState/TestState')
-
-		new Game div, 800, 600, state
+		new Game div, 800, 600, 'GameState/TestState'
 
 	Game: Game

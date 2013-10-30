@@ -11,8 +11,6 @@ define (require) ->
 		draw: (graphics) ->
 			g = graphics
 
-			M.mat4.identity g.mvMatrix
-			M.mat4.translate g.mvMatrix, g.mvMatrix, [4.0, 3.0, 0.0]
 			M.mat4.rotateZ g.mvMatrix, g.mvMatrix, @angle
 			g.loadMatrices g.prog
 
