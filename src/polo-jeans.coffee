@@ -1,12 +1,14 @@
 define (require) ->
-	require 'jquery'
 	require 'jasmine'
-	require 'matrix'
-	require './webgl'
-
 	require 'meta'
 	require 'number'
 
-	require 'GameObject/all'
+	Game = require './Game/Game'
 
-	Game: require './Game/Game'
+	testGame: (div) ->
+		state =
+			new (require 'GameState/TestState')
+
+		new Game div, 800, 600, state
+
+	Game: Game

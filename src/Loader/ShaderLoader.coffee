@@ -3,7 +3,7 @@ define (require) ->
 	Class: ShaderLoader
 	Loads and compiles shaders.
 	###
-	class window.ShaderLoader extends require './Loader'
+	class ShaderLoader extends require './Loader'
 		###
 		Method: constructor
 		Asynchronously loads, compiles, and returns shaders via the provided
@@ -13,7 +13,7 @@ define (require) ->
 		callback - A function (*callback: (shader, entry, done) ->*) that will
 		accept shaders.
 		###
-		constructor: (callback) ->
+		constructor: (@gl, callback) ->
 			super '/res/shaders', callback
 
 		###
@@ -40,12 +40,12 @@ define (require) ->
 		###
 		process: (source, entry) ->
 			if entry.type is 'vertex'
-				shader = gl.createShader gl.VERTEX_SHADER
+				shader = @gl.createShader @gl.VERTEX_SHADER
 			else
-				shader = gl.createShader gl.FRAGMENT_SHADER
-			gl.shaderSource shader, source
-			gl.compileShader shader
-			unless gl.getShaderParameter shader, gl.COMPILE_STATUS
-				console.log gl.getShaderInfoLog shader
+				shader = @gl.createShader @gl.FRAGMENT_SHADER
+			@gl.shaderSource shader, source
+			@gl.compileShader shader
+			unless @gl.getShaderParameter shader, @gl.COMPILE_STATUS
+				console.log @gl.getShaderInfoLog shader
 			@sync = @sync - 1
 			@callback shader, entry, if @sync then false else true

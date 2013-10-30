@@ -9,10 +9,15 @@ requirejs.config
 		meta: './metaProgramming/all'
 		Loader: './Loader'
 		GameObject: './GameObject'
+		GameState: './GameState'
 
 
 use = (polo_jeans) ->
-	testGame = new polo_jeans.Game 'test-game', 800, 600
+	div =
+		document.getElementById 'test-game'
+	testGame =
+		polo_jeans.testGame div
+
 	testGame.play()
 
 err = (error) ->
