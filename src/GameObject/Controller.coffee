@@ -15,5 +15,5 @@ define (require) ->
 			todo()
 
 		isButtonDown: (buttonCode) ->
-			#will change back to string input rater than int for final version
+			#will change back to string input rater than int for final version if needed
 			currentlyPressedKeys[buttonCode]
