@@ -13,6 +13,7 @@ define (require) ->
 			@camera = new Camera @gl
 			@gameObjects = []
 			@uniqueServer = new UniqueServer
+      @paused = false
 
 		###
 		Method: addobject
@@ -23,12 +24,20 @@ define (require) ->
 			@uniqueServer.add obj
 			@gameObjects.push obj
 
+		# switch between paused and play status
+		toggle: ->
+			if @paused
+				@paused = false
+			else
+				@paused = true
+
 		# step through a single action for all the game objects active in this
 		# gamestate.
 		step: ->
-			@camera.step()
-			@gameObjects.forEach (obj) ->
-				obj.step()
+			if not @paused
+				@camera.step()
+				@gameObjects.forEach (obj) ->
+					obj.step()
 
 			#TODO: filter out the dead
 
