@@ -13,7 +13,7 @@ define (require) ->
 			@camera = new Camera @gl
 			@gameObjects = []
 			@uniqueServer = new UniqueServer
-      @paused = false
+			@paused = false
 
 		###
 		Method: addobject
