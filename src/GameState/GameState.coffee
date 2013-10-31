@@ -1,7 +1,6 @@
 define (require) ->
-	Camera = require '../Camera'
+	Camera = require 'Camera'
 	GameObject = require 'GameObject/GameObject'
-	Graphics = require '../Graphics'
 	UniqueServer = require './UniqueServer'
 
 	###
@@ -10,8 +9,8 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: (graphics) ->
-			@camera = new Camera graphics
+		constructor: (@gl) ->
+			@camera = new Camera @gl
 			@gameObjects = []
 			@uniqueServer = new UniqueServer
 
@@ -34,9 +33,7 @@ define (require) ->
 			#TODO: filter out the dead
 
 		# draws all active objects.
-		draw: (graphics) ->
-			type graphics, Graphics
-
+		draw: ->
 			@camera.draw()
 			@gameObjects.forEach (obj) ->
-				obj.draw graphics
+				obj.draw @graphics

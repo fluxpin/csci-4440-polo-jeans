@@ -1,16 +1,13 @@
 requirejs.config
-	#By default load any module IDs from js
-	baseUrl: 'js',
-
+	baseUrl: 'js'
 	paths:
-		jquery: '../lib/jquery-2.0.3'
 		jasmine: '../lib/jasmine-1.3.0/jasmine'
+		jquery: '../lib/jquery-2.0.3'
 		matrix: '../lib/gl-matrix-e53ec98/gl-matrix'
 		meta: './metaProgramming/all'
 		Loader: './Loader'
 		GameObject: './GameObject'
 		GameState: './GameState'
-
 
 use = (polo_jeans) ->
 	div =

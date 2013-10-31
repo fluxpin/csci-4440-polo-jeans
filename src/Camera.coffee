@@ -1,23 +1,37 @@
 define (require) ->
 	M = require 'matrix'
 
+	###
+	Class: Camera
+	###
 	class Camera
-		constructor: (@graphics) ->
-			@x = 0
-			@y = 0
+		###
+		Method: constructor
+		###
+		constructor: (@gl, @_x = 0.0, @_y = 0.0) ->
 
-		lookAt: (@x, @y) ->
-
+		###
+		Method: step
+		###
 		step: ->
 
+		###
+		Method: draw
+		###
 		draw: ->
-			@graphics.gl.clear @graphics.gl.COLOR_BUFFER_BIT
-			M.mat4.identity @graphics.pMatrix
-			M.mat4.ortho @graphics.pMatrix,
-			             -@graphics.gl.drawingBufferWidth / 2,
-			              @graphics.gl.drawingBufferWidth / 2,
-			             -@graphics.gl.drawingBufferHeight / 2,
-			              @graphics.gl.drawingBufferHeight / 2
+			@gl.f.clear @gl.f.COLOR_BUFFER_BIT
+			M.mat4.identity @gl.pMatrix
+			M.mat4.ortho @gl.pMatrix,
+			             -@gl.f.drawingBufferWidth / 2.0,
+			              @gl.f.drawingBufferWidth / 2.0,
+			             -@gl.f.drawingBufferHeight / 2.0,
+			              @gl.f.drawingBufferHeight / 2.0,
 			             -1.0,
 			              1.0
-			M.mat4.translate @graphics.mvMatrix, @graphics.mvMatrix, [-@x, -@y, 0]
+			M.mat4.identity @gl.mvMatrix
+			M.mat4.translate @gl.mvMatrix, @gl.mvMatrix, [-@_x, -@_y, 0.0]
+
+		###
+		Method: lookAt
+		###
+		lookAt: (@_x, @_y) ->

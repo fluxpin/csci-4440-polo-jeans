@@ -1,10 +1,10 @@
 [
 	{
-		"name": "shader.frag",
+		"name": "default.frag",
 		"type": "fragment"
 	},
 	{
-		"name": "shader.vert",
+		"name": "default.vert",
 		"type": "vertex"
 	}
 ]

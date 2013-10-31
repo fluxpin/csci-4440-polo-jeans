@@ -1,24 +1,33 @@
 define (require) ->
+	M = require 'matrix'
 	ShaderLoader = require 'Loader/ShaderLoader'
 	TextureLoader = require 'Loader/TextureLoader'
-	M = require 'matrix'
 
+	###
+	Class: Graphics
+	###
 	class Graphics
+		###
+		Method: constructor
+		###
 		constructor: (div, width, height) ->
 			type width, Number
 			type height, Number
 
-			@gl = @_glFromDiv div, width, height
-			# Projection, model, and view matrices
+			@f = @_glFromDiv div, width, height
+			# Projection and model-view matrices
 			@pMatrix = M.mat4.create()
 			@mvMatrix = M.mat4.create()
 
-			@shaders = { }
-			@textures = { }
+			@shaders = {}
+			@textures = {}
 
-		loadMatrices: (prog) ->
-			@gl.uniformMatrix4fv prog.pMatrix, false, @pMatrix
-			@gl.uniformMatrix4fv prog.mvMatrix, false, @mvMatrix
+		###
+		Method: loadMatrices
+		###
+		loadMatrices: (shader) ->
+			@f.uniformMatrix4fv shader.pMatrix, false, @pMatrix
+			@f.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix
 
 		_glFromDiv: (div, width, height) ->
 			canvas = document.createElement 'canvas'
@@ -36,7 +45,7 @@ define (require) ->
 		initLoaders: (onAllLoaded) ->
 			@sync = 2
 
-			new ShaderLoader @gl, (shader, entry, done) =>
+			new ShaderLoader @f, (shader, entry, done) =>
 				#type shader, ?
 				type entry, Object
 				type done, Boolean
@@ -49,7 +58,7 @@ define (require) ->
 					@initBuffers()
 					onAllLoaded()
 
-			new TextureLoader @gl, (texture, entry, done) =>
+			new TextureLoader @f, (texture, entry, done) =>
 				@textures[entry.name] = texture
 				if done
 					@sync = @sync - 1
@@ -59,46 +68,46 @@ define (require) ->
 					onAllLoaded()
 
 		initShaders: ->
-			vert = @shaders['shader.vert']
-			frag = @shaders['shader.frag']
-			@prog = @gl.createProgram()
+			vert = @shaders['default.vert']
+			frag = @shaders['default.frag']
+			@prog = @f.createProgram()
 
-			@gl.attachShader @prog, vert
-			@gl.attachShader @prog, frag
-			@gl.linkProgram @prog
-			unless @gl.getProgramParameter @prog, @gl.LINK_STATUS
-				console.log @gl.getProgramInfoLog @prog
-			@gl.useProgram @prog
+			@f.attachShader @prog, vert
+			@f.attachShader @prog, frag
+			@f.linkProgram @prog
+			unless @f.getProgramParameter @prog, @f.LINK_STATUS
+				console.log @f.getProgramInfoLog @prog
+			@f.useProgram @prog
 
-			@prog.pMatrix = @gl.getUniformLocation @prog, 'p_matrix'
-			@prog.mvMatrix = @gl.getUniformLocation @prog, 'mv_matrix'
+			@prog.pMatrix = @f.getUniformLocation @prog, 'p_matrix'
+			@prog.mvMatrix = @f.getUniformLocation @prog, 'mv_matrix'
 
-			@prog.vertex = @gl.getAttribLocation @prog, 'vertex'
-			@gl.enableVertexAttribArray @prog.vertex
-			@prog.aTexCoord = @gl.getAttribLocation @prog, 'a_tex_coord'
-			@gl.enableVertexAttribArray @prog.aTexCoord
+			@prog.vertex = @f.getAttribLocation @prog, 'vertex'
+			@f.enableVertexAttribArray @prog.vertex
+			@prog.aTexCoord = @f.getAttribLocation @prog, 'a_tex_coord'
+			@f.enableVertexAttribArray @prog.aTexCoord
 
-			@prog.tex = @gl.getUniformLocation @prog, 'tex'
+			@prog.tex = @f.getUniformLocation @prog, 'tex'
 
-			@gl.detachShader @prog, vert
-			@gl.detachShader @prog, frag
+			@f.detachShader @prog, vert
+			@f.detachShader @prog, frag
 
 		initBuffers: ->
-			@square = @gl.createBuffer()
-			@gl.bindBuffer @gl.ARRAY_BUFFER, @square
-			@gl.bufferData @gl.ARRAY_BUFFER, new Float32Array([
+			@square = @f.createBuffer()
+			@f.bindBuffer @f.ARRAY_BUFFER, @square
+			@f.bufferData @f.ARRAY_BUFFER, new Float32Array([
 				100.0,  100.0,
 				-100.0,  100.0,
 				100.0, -100.0,
 				-100.0, -100.0
-			]), @gl.STATIC_DRAW
+			]), @f.STATIC_DRAW
 			@square.size = 4
 
-			@squareTex = @gl.createBuffer()
-			@gl.bindBuffer @gl.ARRAY_BUFFER, @squareTex
-			@gl.bufferData @gl.ARRAY_BUFFER, new Float32Array([
+			@squareTex = @f.createBuffer()
+			@f.bindBuffer @f.ARRAY_BUFFER, @squareTex
+			@f.bufferData @f.ARRAY_BUFFER, new Float32Array([
 				1.0, 1.0,
 				0.0, 1.0,
 				1.0, 0.0,
 				0.0, 0.0
-			]), @gl.STATIC_DRAW
+			]), @f.STATIC_DRAW

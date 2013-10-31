@@ -1,9 +1,11 @@
 define (require) ->
+	Loader = require './Loader'
+
 	###
 	Class: TextureLoader
 	Loads and configures textures.
 	###
-	class TextureLoader extends require './Loader'
+	class TextureLoader extends Loader
 		###
 		Method: constructor
 		Asynchronously loads, configures, and returns textures via the provided

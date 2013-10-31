@@ -1,9 +1,11 @@
 define (require) ->
+	Loader = require './Loader'
+
 	###
 	Class: ShaderLoader
 	Loads and compiles shaders.
 	###
-	class ShaderLoader extends require './Loader'
+	class ShaderLoader extends Loader
 		###
 		Method: constructor
 		Asynchronously loads, compiles, and returns shaders via the provided

@@ -1,31 +1,33 @@
 define (require) ->
 	M = require 'matrix'
+	GameObject = require 'GameObject/GameObject'
+	GameState = require './GameState'
 
-	class Dummy extends require 'GameObject/GameObject'
-		constructor: ->
-			@angle = 0
+	class Dummy extends GameObject
+		constructor: (@gl) ->
+			@angle = 0.0
 
 		step: ->
-			@angle += 0.01
+			@angle += 0.05 # 0.05 rads ~ 3 degs ~ 180 degs/s
+			if @angle >= 360.0
+				@angle -= 360.0
 
-		draw: (graphics) ->
-			g = graphics
+		draw: ->
+			M.mat4.rotateZ @gl.mvMatrix, @gl.mvMatrix, @angle
+			@gl.loadMatrices @gl.prog
 
-			M.mat4.rotateZ g.mvMatrix, g.mvMatrix, @angle
-			g.loadMatrices g.prog
+			@gl.f.bindBuffer @gl.f.ARRAY_BUFFER, @gl.square
+			@gl.f.vertexAttribPointer @gl.prog.vertex, 2, @gl.f.FLOAT, false, 0, 0
+			@gl.f.bindBuffer @gl.f.ARRAY_BUFFER, @gl.squareTex
+			@gl.f.vertexAttribPointer @gl.prog.aTexCoord, 2, @gl.f.FLOAT, false, 0, 0
+			@gl.f.activeTexture @gl.f.TEXTURE0
+			@gl.f.bindTexture @gl.f.TEXTURE_2D, @gl.textures['foo.png']
+			@gl.f.uniform1i @gl.prog.tex, 0
 
-			g.gl.bindBuffer g.gl.ARRAY_BUFFER, g.square
-			g.gl.vertexAttribPointer g.prog.vertex, 2, g.gl.FLOAT, false, 0, 0
-			g.gl.bindBuffer g.gl.ARRAY_BUFFER, g.squareTex
-			g.gl.vertexAttribPointer g.prog.aTexCoord, 2, g.gl.FLOAT, false, 0, 0
-			g.gl.activeTexture g.gl.TEXTURE0
-			g.gl.bindTexture g.gl.TEXTURE_2D, g.textures['foo.png']
-			g.gl.uniform1i g.prog.tex, 0
-
-			g.gl.drawArrays g.gl.TRIANGLE_STRIP, 0, g.square.size
+			@gl.f.drawArrays @gl.f.TRIANGLE_STRIP, 0, @gl.square.size
 
 
-	class TestState extends require './GameState'
+	class TestState extends GameState
 		constructor: ->
 			super
-			@addObject new Dummy
+			@addObject new Dummy @gl
