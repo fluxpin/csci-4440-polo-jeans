@@ -1,11 +1,13 @@
 define (require) ->
+	extend = (require 'jquery').extend
+
 	###
 	Trait: Inits
 	Provides @onInit
 	###
 	class Inits
 		@onDoes (user) ->
-			user.extend
+			extend user,
 				###
 				Class Method: onInit
 				Adds a GameObject initializer.

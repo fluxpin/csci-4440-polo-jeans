@@ -2,8 +2,13 @@
 Tells Jasmine to run the tests.
 ###
 
-->
-	if TEST
+define (require) ->
+	require 'jasmine'
+	require 'jasmine-html'
+	require 'polo-jeans'
+
+	->
+
 		jasmineEnv =
 			jasmine.getEnv()
 		jasmineEnv.updateInterval =
@@ -15,8 +20,8 @@ Tells Jasmine to run the tests.
 		jasmine.specFilter = (spec) ->
 			htmlReporter.specFilter spec
 
-		currentWindowOnLoad = window.onload
-		window.onload = ->
-			if currentWindowOnLoad?
-				currentWindowOnLoad()
-			jasmineEnv.execute()
+		#currentWindowOnLoad = window.onload
+		#window.onload = ->
+		#	if currentWindowOnLoad?
+		#		currentWindowOnLoad()
+		jasmineEnv.execute()

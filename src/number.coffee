@@ -1,5 +1,5 @@
 define (require) ->
-	require 'meta'
+	extend = (require 'jquery').extend
 
 	###
 	Const: TwoPi
@@ -45,7 +45,7 @@ define (require) ->
 		Number.prototype[name] = ->
 			Math[name] @
 
-	Number.prototype.extend
+	extend Number.prototype,
 		###
 		Method: crop
 		Push this to be within [inclusive] a min and max.

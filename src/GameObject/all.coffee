@@ -13,4 +13,4 @@ define (require) ->
 	require './ListensToControl'
 	require './Sprite'
 	require './MoveSprite'
-	require './Unique'
+	require './unique'

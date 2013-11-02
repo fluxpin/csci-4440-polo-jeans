@@ -2,7 +2,7 @@
 rm -r doc js
 
 echo COMPILE
-coffee  --compile --output js src
+coffee  --compile --bare --output js src
 
 echo LINT
 coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee

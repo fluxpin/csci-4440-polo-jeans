@@ -1,11 +1,22 @@
 define (require) ->
+	require 'GameObject/unique'
+
+	###
+	Class: UniqueConflictError
+	Thrown when two Uniques of the same type are added to the same UniqueServer.
+	###
+	class UniqueConflictError extends Error
+		constructor: (@first, @newOne, @uniqueType) ->
+			@message =
+				"#{@first} and #{@newOne} are of both unique type #{@uniqueType.name}"
+
 	###
 	Class: UniqueServer
 	Keeps track of Unique objects.
 	###
 	class UniqueServer
 		constructor: ->
-			@uniques = {}
+			@uniques = {} # type name -> object of that type
 
 		###
 		Prop: uniques
@@ -23,7 +34,10 @@ define (require) ->
 			object.uniqueTypes?.toArray().forEach (uniqueType) =>
 				old =
 					@uniques[uniqueType]
+
 				check not old?, ->
+					console.log old
+					console.log uniqueType
 					new UniqueConflictError old, object, uniqueType
 
 				@uniques[uniqueType] = object
@@ -53,19 +67,6 @@ define (require) ->
 		the: (ctr) ->
 			type ctr, Function
 			@uniques[ctr.name]
-
-
-
-	###
-	Class: UniqueConflictError
-	Thrown when two Uniques of the same type are added to the same UniqueServer.
-	###
-	class UniqueConflictError
-		constructor: (@first, @newOne, @uniqueType) ->
-			@message =
-				"#{@first} and #{@newOne} are of unique type #{@uniqueType.name}"
-
-
 
 	describe 'UniqueServer', ->
 		it 'works simple', ->
@@ -102,5 +103,6 @@ define (require) ->
 			us.remove rh
 			expect(us.the House).toEqual undefined
 			expect(us.the RocketShip).toEqual undefined
+
 
 	UniqueServer
