@@ -41,7 +41,7 @@ define (require) ->
 		entry - An index entry specifying the shader.
 		###
 		process: (source, entry) ->
-			if entry.type == 'vertex'
+			if entry.type is 'vertex'
 				shader = @gl.createShader @gl.VERTEX_SHADER
 			else
 				shader = @gl.createShader @gl.FRAGMENT_SHADER
