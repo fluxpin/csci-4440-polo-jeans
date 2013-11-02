@@ -9,11 +9,10 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: (@gl) ->
-			@camera = new Camera @gl
+		constructor: ->
+			@camera = new Camera
 			@gameObjects = []
 			@uniqueServer = new UniqueServer
-			@paused = false
 
 		###
 		Method: addobject
@@ -24,25 +23,20 @@ define (require) ->
 			@uniqueServer.add obj
 			@gameObjects.push obj
 
-		# switch between paused and play status
-		toggle: ->
-			if @paused
-				@paused = false
-			else
-				@paused = true
+		removeObject: (obj) ->
+			todo()
 
 		# step through a single action for all the game objects active in this
 		# gamestate.
 		step: ->
-			if not @paused
-				@camera.step()
-				@gameObjects.forEach (obj) ->
-					obj.step()
+			@camera.step()
+			@gameObjects.forEach (obj) ->
+				obj.step()
 
 			#TODO: filter out the dead
 
 		# draws all active objects.
-		draw: ->
-			@camera.draw()
+		draw: (gl) ->
+			@camera.draw gl
 			@gameObjects.forEach (obj) ->
-				obj.draw @graphics
+				obj.draw gl

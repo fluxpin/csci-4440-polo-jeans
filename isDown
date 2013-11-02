@@ -1,4 +1,0 @@
-isDown = (key_code) ->
-#key_code is integer code representing key user wants to check
-	true if event.keyCode is key_code
-	false

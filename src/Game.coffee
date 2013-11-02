@@ -1,23 +1,34 @@
 define (require) ->
 	Graphics = require 'Graphics'
 
+	requestAnimationFrame =
+		window.requestAnimationFrame ? window.mozRequestAnimationFrame
+
+	check requestAnimationFrame?, ->
+		fail "Can't get 'requestAnimationFrame'"
+
+
 	###
 	Class: Game
 	###
 	class Game
 		###
 		Method: constructor
+		Paremeters:
+			div - A <div> element of size width x height.
+			width - width of the game area.
+			height -  height of the game area.
+			state - GameState this Game will start with.
 		###
 		constructor: (div, width, height, state) ->
 			@gl = new Graphics div, width, height
-			@_state = new state @gl
+			@_state = state
 
 		###
 		Method: play
 		###
 		play: ->
 			@gl.initLoaders =>
-				console.log 'All loaded!'
 				@_step()
 
 		###
@@ -25,10 +36,11 @@ define (require) ->
 		###
 		_step: ->
 			try
-				mozRequestAnimationFrame =>
+				requestAnimationFrame =>
 					@_step()
 				@_state.step()
-				@_state.draw()
+				@_state.draw @gl
+
 			catch error
 				console.trace()
 				throw error

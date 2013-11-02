@@ -2,7 +2,6 @@
 Class: Object
 ###
 
-
 equiv = (a, b) ->
 	a == b or \
 		(a instanceof Function and b instanceof Function and \

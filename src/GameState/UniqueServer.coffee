@@ -1,6 +1,4 @@
 define (require) ->
-
-
 	###
 	Class: UniqueServer
 	Keeps track of Unique objects.

@@ -5,11 +5,12 @@ Object.prototype.extend
 	isA: (trait_ctr) ->
 		(@ instanceof trait_ctr) or @traits?[trait_ctr.name]?
 
+###
 	superPrototypes: ->
 		proto =
 			Object.getPrototypeOf @
 		if proto?
-			[proto].concat proto.supers()
+			[proto].concat proto.superPrototypes()
 		else
 			[]
 
@@ -27,6 +28,7 @@ Object.prototype.extend
 
 	allIsA: ->
 		@allTraitNames().concat @superNames
+###
 
 ###
 Func: abstract

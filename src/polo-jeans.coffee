@@ -4,9 +4,9 @@ define (require) ->
 	require 'number'
 
 	Game = require 'Game'
-	TestGame = require 'GameState/TestState'
+	TestState = require 'GameState/TestState'
 
 	testGame: (div) ->
-		new Game div, 800, 600, TestGame
+		new Game div, 800, 600, new TestState
 
 	Game: Game
