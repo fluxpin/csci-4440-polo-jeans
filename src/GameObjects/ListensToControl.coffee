@@ -1,26 +1,31 @@
 define (require) ->
+	require 'meta'
+	extend = (require 'jquery').extend
+	GameObject = require './GameObject'
+	CallsBack = require './CallsBack'
+	Inits = require './Inits'
 	###
 	Trait: ListensToControl
 	TODO TEST, DOC
 	###
 	class ListensToControl
-		@does (require './CallsBack'), require './Inits'
+		@does CallsBack, Inits
 
 		@onDoes (user) ->
-			user.extend
+			extend user,
 				###
 				Class Method: onPress
 				Adds a callback for when a button is pressed.
 				###
 				onPress: (button, func) ->
-					@onKey 'presses', button, func
+					@onKey 'press', button, func
 
 				###
 				Class Method: onRelease
 				Adds a callback for when a button is released.
 				###
 				onRelease: (state, func) ->
-					@onKey 'releases', button, func
+					@onKey 'release', button, func
 
 		###
 		Method: init
@@ -44,7 +49,7 @@ define (require) ->
 			button - The button that was pushed.
 		###
 		onButtonDown: (button) ->
-			@callBackMap @onPresses, button
+			@callBackMap @_on_press, button
 
 		###
 		Method: buttonUp
@@ -53,7 +58,7 @@ define (require) ->
 			button - The button that was lifted.
 		###
 		onButtonUp: (button) ->
-			@callBackMap @onReleases, button
+			@callBackMap @_on_release, button
 
 
 

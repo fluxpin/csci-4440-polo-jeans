@@ -1,5 +1,5 @@
 define (require) ->
-	require 'GameObject/unique'
+	require 'meta'
 
 	###
 	Class: UniqueConflictError
@@ -10,19 +10,22 @@ define (require) ->
 			@message =
 				"#{@first} and #{@newOne} are of both unique type #{@uniqueType.name}"
 
+	class UniqueMissingError extends Error
+		constructor: (@type) ->
+			@message =
+				"There is no unique object of type #{@type}"
+
 	###
 	Class: UniqueServer
 	Keeps track of Unique objects.
 	###
 	class UniqueServer
 		constructor: ->
-			@uniques = {} # type name -> object of that type
+			@_uniques = {} # type name -> object of that type
 
-		###
-		Prop: uniques
-		Map of type names to unique objects.
-		###
-
+		has: (uniqueType) ->
+			type uniqueType, Function
+			Object.prototype.hasOwnProperty.call @_uniques, uniqueType.name
 
 		###
 		Method: add
@@ -32,15 +35,11 @@ define (require) ->
 		###
 		add: (object) ->
 			object.uniqueTypes?.toArray().forEach (uniqueType) =>
-				old =
-					@uniques[uniqueType]
+				type uniqueType, Function
+				check not (@has uniqueType), ->
+					new UniqueConflictError (@the uniqueType), object, uniqueType
 
-				check not old?, ->
-					console.log old
-					console.log uniqueType
-					new UniqueConflictError old, object, uniqueType
-
-				@uniques[uniqueType] = object
+				@_uniques[uniqueType.name] = object
 
 		###
 		Method: remove
@@ -50,12 +49,10 @@ define (require) ->
 		###
 		remove: (object) ->
 			object.uniqueTypes?.toArray().forEach (uniqueType) =>
-				old =
-					@uniques[uniqueType]
-				check @uniques[uniqueType]?, ->
-					"Losing object #{object} that was not in @uniques?"
+				check (@has uniqueType), ->
+					"Losing object #{object} that was not in @_uniques?"
 
-				delete @uniques[uniqueType]
+				delete @_uniques[uniqueType.name]
 
 		###
 		Method: the
@@ -64,9 +61,12 @@ define (require) ->
 		eg
 		> the Player
 		###
-		the: (ctr) ->
-			type ctr, Function
-			@uniques[ctr.name]
+		the: (uniqueType) ->
+			type uniqueType, Function
+			check (@has uniqueType), ->
+				new UniqueMissingError uniqueType
+
+			@_uniques[uniqueType.name]
 
 	describe 'UniqueServer', ->
 		it 'works simple', ->
@@ -78,12 +78,12 @@ define (require) ->
 				new A
 
 			us.add 3
-			expect(us.uniques).toEqual {}
+			expect(us._uniques).toEqual {}
 			us.add a
 			expect(us.the A).toEqual a
 			expect(-> us.add new A).toThrow()
 			us.remove a
-			expect(us.the A).toEqual undefined
+			expect(-> us.the A).toThrow()
 
 		it 'works with multiple unique types', ->
 			class House
@@ -101,8 +101,8 @@ define (require) ->
 			expect(us.the House).toEqual rh
 			expect(us.the RocketShip).toEqual rh
 			us.remove rh
-			expect(us.the House).toEqual undefined
-			expect(us.the RocketShip).toEqual undefined
+			expect(-> us.the House).toThrow()
+			expect(-> us.the RocketShip).toThrow()
 
 
 	UniqueServer

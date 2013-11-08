@@ -1,4 +1,7 @@
 define (require) ->
+	extend = (require 'jquery').extend
+	Inits = require './Inits'
+	GameObject = require './GameObject'
 	###
 	Trait: HasState
 	A class that has a single state.
@@ -6,26 +9,26 @@ define (require) ->
 	Starts off 'idle'.
 	###
 	class HasState
-		@does require './Inits'
+		@does Inits
 
-		@listAdd 'onInit', ->
+		@onInit ->
 			@be 'idle'
 
 		@onDoes (user) ->
-			user.extend
+			extend user,
 				###
 				Class Method: onStart
 				Adds a callback for when a state is begun.
 				###
 				onStart: (state, func) ->
-					@onKey 'starts', state, func
+					@onKey 'start', state, func
 
 				###
 				Class Method: onEnd
 				Adds a callback for when a state ends.
 				###
 				onEnd: (state, func) ->
-					@onKey 'ends', state, func
+					@onKey 'end', state, func
 
 
 		###
@@ -38,23 +41,17 @@ define (require) ->
 		Set state to something new.
 		###
 		be: (state) ->
-			if @state != state
-				@endState @state
+			unless @state is state
+				@callBackMap @_on_end, state
 				@state = state
-				@startState @state
-
-		startState: (state) ->
-			@callBackMap @onStarts, state
-
-		endState: (state) ->
-			@callBackMap @onEnds, state
-
+				@callBackMap @_on_start, state
 
 	describe 'state', ->
-		class SampleHasState extends require './GameObject'
+		class SampleHasState extends GameObject
 			@does HasState
 
 			constructor: ->
+				super()
 				@timesOn = 0
 				@timesOffOff = 0
 
@@ -72,6 +69,7 @@ define (require) ->
 				@timesOffOff += 1
 
 			test: ->
+				expect(@state).toEqual 'idle'
 				@be 'off'
 				@toggle()
 				expect(@state).toEqual 'on'

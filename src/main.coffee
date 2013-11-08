@@ -5,10 +5,11 @@ requirejs.config
 		'jasmine-html': '../lib/jasmine-1.3.0/jasmine-html'
 		jquery: '../lib/jquery-2.0.3'
 		matrix: '../lib/gl-matrix-e53ec98/gl-matrix'
-		meta: './metaProgramming/all'
+		meta: './metaProgramming/index'
 		Loader: './Loader'
-		GameObject: './GameObject'
+		GameObject: './GameObjects/index'
 		GameState: './GameState'
+		Vec2: './Vec2'
 
 use = (polo_jeans) ->
 	div =

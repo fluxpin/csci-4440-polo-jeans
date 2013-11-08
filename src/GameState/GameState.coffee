@@ -1,6 +1,6 @@
 define (require) ->
 	Camera = require 'Camera'
-	GameObject = require 'GameObject/GameObject'
+	GameObject = require 'GameObject'
 	UniqueServer = require './UniqueServer'
 
 	###

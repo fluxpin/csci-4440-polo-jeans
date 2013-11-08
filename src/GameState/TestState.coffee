@@ -1,6 +1,6 @@
 define (require) ->
 	M = require 'matrix'
-	GameObject = require 'GameObject/GameObject'
+	GameObject = require 'GameObject'
 	GameState = require './GameState'
 
 	class Dummy extends GameObject

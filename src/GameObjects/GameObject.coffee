@@ -1,4 +1,5 @@
 define (require) ->
+	require 'meta'
 	###
 	Class: GameObject
 	Anything that steps and draws.
@@ -10,9 +11,6 @@ define (require) ->
 		constructor: ->
 			@initialize()
 
-		initialize: ->
-			@callBack @onInitializers
-
 
 		###
 		Method: step
@@ -20,6 +18,7 @@ define (require) ->
 		Does not involve drawing, but may make sounds.
 		###
 		step: ->
+			@callBack @_on_step
 
 		###
 		Method: draw

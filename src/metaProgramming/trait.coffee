@@ -8,6 +8,8 @@ define (require) ->
 	Object.defineProperty Object.prototype, 'isA',
 		enumerable: false
 		value: (trait_ctr) ->
+			check trait_ctr instanceof Function, ->
+				"Not a function, is #{trait_ctr}"
 			(@ instanceof trait_ctr) or @traits?.contains trait_ctr.name
 
 
@@ -46,7 +48,7 @@ define (require) ->
 
 
 	traitMembers = (trate) ->
-		check typeof trate == 'function', ->
+		check typeof trate is 'function', ->
 			"must be a function, not #{trate}"
 
 		trate.prototype
@@ -75,21 +77,20 @@ define (require) ->
 				clazz[name] =
 					traitMerge @, trait_ctr, clazz[name], trait[name], name
 
-			trait.onDoes?.data.forEach (onDoes) =>
+			trait._on_does?.data.forEach (onDoes) =>
 				onDoes.call trait_ctr, @
-
 
 	traitMerge = (ctr, trait_ctr, original, now, name) ->
 		#return tagFrom now, trait_ctr unless original?
 
 		tm = (x) -> x instanceof TraitMergingData
-		fun = (x) -> typeof x == 'function'
+		fun = (x) -> typeof x is 'function'
 
 		if original?
 			if (tm original) and (tm now)
 				original.merge now
 			else if (fun original) and (fun now)
-				if original == now
+				if original is now
 					now
 				else
 					throw new TraitCollisionError ctr, trait_ctr, name

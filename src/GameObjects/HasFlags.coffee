@@ -1,29 +1,34 @@
 define (require) ->
+	require 'meta'
+	extend = (require 'jquery').extend
+	CallsBack = require './CallsBack'
+	Inits = require './Inits'
+	GameObject = require './GameObject'
 	###
 	Trait: HasFlags
 	Allows an object to raise and lower condition-signifying strings.
 	###
 	class HasFlags
-		@does (require './CallsBack'), require './Inits'
+		@does CallsBack, Inits
 
 		@onInit ->
 			@flags = {}
 
 		@onDoes (user) ->
-			user.extend
+			extend user,
 				###
 				Class Method: onRaise
 				Adds a callback for when a flag is newly raised.
 				###
 				onRaise: (flag, func) ->
-					@onKey 'raises', flag, func
+					@onKey 'raise', flag, func
 
 				###
 				Class Method: onLower
 				Adds a callback for when a flag is newly lowered.
 				###
 				onLower: (flag, func) ->
-					@onKey 'lowers', flag, func
+					@onKey 'lower', flag, func
 
 		###
 		Prop: flags
@@ -36,7 +41,9 @@ define (require) ->
 		Calls startFlag if the flag is newly raised.
 		###
 		raise: (flag) ->
-			@startFlag flag unless @flags[flag]
+			unless @flags[flag]
+				@flags[flag] = yes
+				@callBackMap @_on_raise, flag
 
 		###
 		Method: lower
@@ -44,14 +51,16 @@ define (require) ->
 		Calls endFlag if the flag is newly lowered.
 		###
 		lower: (flag) ->
-			@endFlag flag if @flags[flag]
+			if @flags[flag]
+				delete @flags[flag]
+				@callBackMap @_on_lower, flag
 
 		###
 		Method: am
 		Whether the flag has been raised.
 		###
 		am: (flag) ->
-			@flags[flag]?
+			Object.prototype.hasOwnProperty.call @flags, flag
 
 		###
 		Method: amAny
@@ -59,14 +68,6 @@ define (require) ->
 		###
 		amAny: (flags) ->
 			flags.some @am
-
-		startFlag: (flag) ->
-			@flags[flag] = yes
-			@callBackMap @onRaises, flag
-
-		endFlag: (flag) ->
-			delete @flags[flag]
-			@callBackMap @onLowers, flag
 
 
 

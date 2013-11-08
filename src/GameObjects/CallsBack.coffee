@@ -1,4 +1,6 @@
 define (require) ->
+	TMD = require 'metaProgramming/TraitMergingData'
+
 	###
 	Trait: CallsBack
 	Provides methods for classes that have TraitMergingData callbacks.
@@ -23,7 +25,7 @@ define (require) ->
 		###
 		callBack: (list, a, b, c, d, e) ->
 			if list?
-				type list, TraitMergingList
+				type list, TMD.TraitMergingList
 				@_callBackArray list.data, a, b, c, d, e
 
 		###
@@ -39,9 +41,11 @@ define (require) ->
 			abcde - Arguments passed to every callback.
 		###
 		callBackMap: (map, key, a, b, c, d, e) ->
-			if map?[key]?
-				type map, TraitMergingMultiMap
-				@_callBackArray map[key], a, b, c, d, e
+			if map?
+				type map, TMD.TraitMergingMultiMap
+				callBacks = map?.at key
+				if callBacks?
+					@_callBackArray callBacks, a, b, c, d, e
 
 
 	###

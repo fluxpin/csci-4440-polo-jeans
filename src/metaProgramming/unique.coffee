@@ -6,6 +6,6 @@ define (require) ->
 		There can be only one object per GameState that isA this type.
 		###
 		unique: ->
-			@setAdd 'uniqueTypes', @name
+			@listAdd 'uniqueTypes', @
 
 

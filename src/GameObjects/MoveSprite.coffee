@@ -1,4 +1,5 @@
 define (require) ->
+	Moves = require './Moves'
 	###
 	Class: MoveSprite
 	A Sprite with velocity.
@@ -6,6 +7,6 @@ define (require) ->
 	TODO TEST
 	###
 	class window.MoveSprite extends require './Sprite'
-		@does require './Moves'
+		@does Moves
 
 		init: ->

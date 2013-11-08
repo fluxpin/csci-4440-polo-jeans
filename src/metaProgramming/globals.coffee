@@ -14,7 +14,7 @@ define (require) ->
 		check: (condition, error_message_maker) ->
 			unless condition
 				err = error_message_maker()
-				if typeof err == 'string'
+				if err instanceof String
 					fail err
 				else
 					throw err
@@ -31,7 +31,7 @@ define (require) ->
 		Produces a string showing the members of an object.
 		###
 		inspect: (object) ->
-			if typeof object == 'object' and object != null
+			if typeof object is 'object' and object != null
 				if object instanceof Array
 					'[' + (object.join ', ') + ']'
 				else
@@ -49,6 +49,8 @@ define (require) ->
 			throw new NotImplementedError text
 
 		type: (obj, type) ->
+			check obj?, ->
+				"Object is undefined!"
 			check (obj.isA type), ->
 				"#{obj} is not of expected type #{type.name}"
 

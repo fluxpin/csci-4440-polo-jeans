@@ -43,6 +43,8 @@ define (require) ->
 			unless value in @data
 				@data.push value
 
+		toArray: ->
+			@data
 
 
 	###
@@ -89,7 +91,11 @@ define (require) ->
 		toString: ->
 			inspect @
 
-
+		at: (key) ->
+			if Object.prototype.hasOwnProperty.call @map, key
+				@map[key]
+			else
+				null
 
 	###
 	Class: TraitMergingMap
@@ -153,7 +159,7 @@ define (require) ->
 		(string.charAt 0).toUpperCase() + string.slice 1
 
 	toOnX = (name) ->
-		"on#{capitalizeFirstLetter name}"
+		"_on_#{name}"#"on_#{capitalizeFirstLetter name}"
 
 	###
 	Class: Function
@@ -209,6 +215,13 @@ define (require) ->
 			@listAdd (toOnX name), fun
 
 		###
+		Class Method: onDoes
+		Registers a callback for when a class @does a trait.
+		###
+		onDoes: (fun) ->
+			@on 'does', fun
+
+		###
 		Class Method: onKey
 		Registers a function with a TraitMergingMap of keys to callbacks.
 		eg
@@ -221,15 +234,6 @@ define (require) ->
 			type key, String
 			type fun, Function
 			@mMapAdd (toOnX mapName), key, fun
-
-		###
-		Class Method: onDoes
-		Registers a callback for when a class @does a trait.
-		###
-		onDoes: (fun) ->
-			@on 'does', fun
-
-
 
 	describe "TraitMergingData", ->
 		it 'TODO: more testing here', ->

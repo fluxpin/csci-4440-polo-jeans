@@ -5,7 +5,7 @@ define (require) ->
 	TODO TEST
 	###
 	class Sprite extends require './GameObject'
-		@does (require './HasAnimation'), require './HasShape'
+		@does (require './HasAnimation'), require './HasPos'
 
 		constructor: ->
 			super()

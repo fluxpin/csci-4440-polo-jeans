@@ -1,4 +1,6 @@
 define (require) ->
+	require 'meta'
+
 	###
 	Trait: HasAnimation
 	Provides functions for objects that load animation data.
@@ -23,5 +25,5 @@ define (require) ->
 		#@something
 		#	@animation.step()
 
-		dummyMethodSoLinterWontComplain: ->
-			42
+
+		null
