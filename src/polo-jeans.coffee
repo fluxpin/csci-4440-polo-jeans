@@ -7,6 +7,7 @@ define (require) ->
 	TestState = require 'GameState/TestState'
 
 	testGame: (div) ->
-		new Game div, 800, 600, new TestState
-
+		game = new Game div, 800, 600
+		game.changeState new TestState(game)
+		game
 	Game: Game

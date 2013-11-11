@@ -1,0 +1,5 @@
+SDD exam ideas:
+
+MPC-HC two features:
+ability to download subtitles for content from an external site. (extended feature: choose between languages) (download dubs instead of subs?)
+better video queueing - playlist support

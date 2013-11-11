@@ -43,5 +43,4 @@ define (require) ->
 		the: (type) ->
 			@gameState.uniqueServer.the type
 
-		die: ->
-			todo
+		dead: ->

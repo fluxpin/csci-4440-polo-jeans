@@ -1,16 +1,18 @@
 define (require) ->
 	M = require 'matrix'
 	GameObject = require 'GameObject'
-	GameState = require './GameState'
+	PlayState = require './GameState'
 
 	class Dummy extends GameObject
 		constructor: ->
 			@angle = 0.0
+			@timer = 0
 
 		step: ->
 			@angle += 0.05 # 0.05 rads ~ 3 degs ~ 180 degs/s
 			if @angle >= 360.0
 				@angle -= 360.0
+			@timer += 1
 
 		draw: (gl) ->
 			M.mat4.rotateZ gl.mvMatrix, gl.mvMatrix, @angle
@@ -25,9 +27,31 @@ define (require) ->
 			gl.f.uniform1i gl.prog.tex, 0
 
 			gl.f.drawArrays gl.f.TRIANGLE_STRIP, 0, gl.square.size
-
-
-	class TestState extends GameState
-		constructor: ->
+			
+		dead: ->
+			if @timer >= 200
+				true
+			else false
+	class Pauser extends GameObject
+		constructor: (state) ->
+			@gameState = state
+			@timer = 0
+			@unpause = 0
+		###
+		step: ->
+			@timer += 1
+			if @timer > 200
+				@timer = 0
+				@gameState.changeState()
+		###
+		draw: (arg) ->
+			@unpause += 1
+			if @unpause > 50
+				@unpause = 0
+				@gameState.changeState()
+	
+	class TestState extends PlayState
+		constructor: (arg) ->
 			super
 			@addObject new Dummy
+			@addObject new Pauser(@)

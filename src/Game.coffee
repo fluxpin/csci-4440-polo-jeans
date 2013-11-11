@@ -44,3 +44,5 @@ define (require) ->
 			catch error
 				console.trace()
 				throw error
+		changeState: (state) ->
+			@_state = state
