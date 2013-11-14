@@ -27,11 +27,14 @@ define (require) ->
 			gl.f.uniform1i gl.prog.tex, 0
 
 			gl.f.drawArrays gl.f.TRIANGLE_STRIP, 0, gl.square.size
-			
+
 		dead: ->
 			if @timer >= 200
 				true
 			else false
+
+
+
 	class Pauser extends GameObject
 		constructor: (state) ->
 			@gameState = state
@@ -49,7 +52,9 @@ define (require) ->
 			if @unpause > 50
 				@unpause = 0
 				@gameState.changeState()
-	
+
+
+
 	class TestState extends PlayState
 		constructor: (arg) ->
 			super

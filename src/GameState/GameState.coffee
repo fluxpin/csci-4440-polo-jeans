@@ -25,7 +25,7 @@ define (require) ->
 				@gameObjects = []
 				@uniqueServer = new UniqueServer
 
-				
+
 		###
 		Method: addobject
 		Puts a new object into the play area.
@@ -39,17 +39,17 @@ define (require) ->
 			pos = @gameObjects.indexOf(obj)
 			if pos >= 0
 				@gameObjects.splice(pos,1)
-				
+
 		step: ->
-		
+
 		# draws all active objects.
 		draw: (gl) ->
 			@camera.draw gl
 			@gameObjects.forEach (obj) ->
 				obj.draw gl
-				
+
 		changeState: ->
-		
+
 	###
 	Class: PausedState
 	Step should not actually perform anything since the game is paused.
@@ -60,8 +60,12 @@ define (require) ->
 			@gameObjects.forEach (obj) =>
 				if obj.dead() is true
 					@removeObject(obj)
+
 		changeState: ->
 			@game.changeState(new PlayState(@game,@))
+
+
+
 	###
 	Class: PlayState
 	The standard gamestate with both play and draw functioning on all objects.
@@ -75,5 +79,6 @@ define (require) ->
 				obj.step()
 				if obj.dead() is true
 					@removeObject(obj)
+
 		changeState: ->
 			@game.changeState(new PausedState(@game,@))
