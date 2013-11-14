@@ -42,30 +42,14 @@ define (require) ->
 			gl.clear gl.COLOR_BUFFER_BIT
 			gl
 
-		initLoaders: (onAllLoaded) ->
-			@sync = 2
-
-			new ShaderLoader @f, (shader, entry, done) =>
-				#type shader, ?
-				type entry, Object
-				type done, Boolean
-				console.log @shaders
-				@shaders[entry.name] = shader
-				if done
-					@sync = @sync - 1
-				unless @sync
-					@initShaders()
-					@initBuffers()
-					onAllLoaded()
-
-			new TextureLoader @f, (texture, entry, done) =>
-				@textures[entry.name] = texture
-				if done
-					@sync = @sync - 1
-				unless @sync
-					@initShaders()
-					@initBuffers()
-					onAllLoaded()
+		initLoaders: ->
+			shaderLoader = new ShaderLoader '/res/shaders', @
+			textureLoader = new TextureLoader '/res/textures', @f
+			$.when(shaderLoader.load(), textureLoader.load()).then (shad, texts) =>
+				@shaders[s.name] = s for s in shad
+				@textures[t.name] = t for t in texts
+				@initShaders()
+				@initBuffers()
 
 		initShaders: ->
 			vert = @shaders['default.vert']

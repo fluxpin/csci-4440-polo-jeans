@@ -1,53 +1,31 @@
 define (require) ->
+	$ = require 'jquery'
 	Loader = require './Loader'
+
+	getText = (url) ->
+		$.get url, undefined, undefined, 'text'
 
 	###
 	Class: ShaderLoader
-	Loads and compiles shaders.
 	###
 	class ShaderLoader extends Loader
-		###
-		Method: constructor
-		Asynchronously loads, compiles, and returns shaders via the provided
-		callback.
+		constructor: (@_path, @gl) ->
 
-		Parameters:
-		callback - A function (*callback: (shader, entry, done) ->*) that will
-		accept shaders.
-		###
-		constructor: (@gl, callback) ->
-			super '/res/shaders', callback
+		#
+		_load: (entry) ->
+			source = getText "#{@_path}/#{entry.name}"
+			source.then (source) ->
+				[entry, source]
 
-		###
-		Method: load
-		Loads the shader specified by the provided path and entry.
-
-		Parameters:
-		entry - An index entry specifying a shader.
-		###
-		load: (entry) =>
-			shaderReq = new XMLHttpRequest()
-			shaderReq.open 'GET', "#{@path}/#{entry.name}"
-			shaderReq.onload = =>
-				@process shaderReq.response, entry
-			shaderReq.send null
-
-		###
-		Method: process
-		Compiles the provided shader.
-
-		Parameters:
-		source - A shader.
-		entry - An index entry specifying the shader.
-		###
-		process: (source, entry) ->
+		#
+		_process: (entry, source) ->
 			if entry.type is 'vertex'
-				shader = @gl.createShader @gl.VERTEX_SHADER
+				shader = @gl.f.createShader @gl.f.VERTEX_SHADER
 			else
-				shader = @gl.createShader @gl.FRAGMENT_SHADER
-			@gl.shaderSource shader, source
-			@gl.compileShader shader
-			unless @gl.getShaderParameter shader, @gl.COMPILE_STATUS
-				console.log @gl.getShaderInfoLog shader
-			@sync = @sync - 1
-			@callback shader, entry, if @sync then false else true
+				shader = @gl.f.createShader @gl.f.FRAGMENT_SHADER
+			shader.name = entry.name
+			@gl.f.shaderSource shader, source
+			@gl.f.compileShader shader
+			unless @gl.f.getShaderParameter shader, @gl.f.COMPILE_STATUS
+				console.log @gl.f.getShaderInfoLog shader
+			shader

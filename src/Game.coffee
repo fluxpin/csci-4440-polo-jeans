@@ -7,7 +7,6 @@ define (require) ->
 	check requestAnimationFrame?, ->
 		fail "Can't get 'requestAnimationFrame'"
 
-
 	###
 	Class: Game
 	###
@@ -23,17 +22,16 @@ define (require) ->
 		constructor: (div, width, height, state) ->
 			@gl = new Graphics div, width, height
 			@_state = state
+			@_ready = @gl.initLoaders()
 
 		###
 		Method: play
 		###
 		play: ->
-			@gl.initLoaders =>
+			@_ready.then =>
 				@_step()
 
-		###
-		Method: step
-		###
+		#
 		_step: ->
 			try
 				requestAnimationFrame =>
@@ -44,5 +42,9 @@ define (require) ->
 			catch error
 				console.trace()
 				throw error
+
+		###
+		Method: changeState
+		###
 		changeState: (state) ->
 			@_state = state
