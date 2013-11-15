@@ -6,7 +6,6 @@ requirejs.config
 		jquery: '../lib/jquery-2.0.3'
 		matrix: '../lib/gl-matrix-e53ec98/gl-matrix'
 		meta: './metaProgramming/index'
-		Loader: './Loader'
 		GameObject: './GameObjects/index'
 		GameState: './GameState'
 		Vec2: './Vec2'

@@ -1,31 +1,47 @@
 define (require) ->
 	$ = require 'jquery'
-	Loader = require './Loader'
+	Loader = require 'Loader/Loader'
 
 	###
 	Class: TextureLoader
+	Load WebGL 2D textures
 	###
 	class TextureLoader extends Loader
-		constructor: (@_path, @gl) ->
+		###
+		Method: constructor
+		Parameters:
+		path - Path to the resource's top-level directory.
+		gl - Graphics object representing the game's WebGL context.
+		###
+		constructor: (@_path, @_gl) ->
 
-		#
-		_load: (entry) =>
+		# Load image
+		_load: (entry) ->
 			image = $.Deferred()
-			textureReq = new Image
-			textureReq.onload = =>
-				image.resolve [entry, textureReq]
-			textureReq.src = "#{@_path}/#{entry.name}"
+			req = new Image
+			req.onload = ->
+				image.resolve [entry, req]
+			req.src = "#{@_path}/#{entry.name}"
 			image
 
-		#
+		# Convert image to texture
 		_process: (entry, image) ->
-			texture = @gl.createTexture()
+			gl = @_gl.f
+
+			texture = gl.createTexture()
 			texture.name = entry.name
-			@gl.bindTexture @gl.TEXTURE_2D, texture
-			@gl.pixelStorei @gl.UNPACK_FLIP_Y_WEBGL, true
-			@gl.texImage2D @gl.TEXTURE_2D, 0, @gl.RGBA, @gl.RGBA, @gl.UNSIGNED_BYTE,
-						image
-			@gl.texParameteri @gl.TEXTURE_2D, @gl.TEXTURE_MAG_FILTER, @gl.NEAREST
-			@gl.texParameteri @gl.TEXTURE_2D, @gl.TEXTURE_MIN_FILTER, @gl.NEAREST
-			@gl.bindTexture @gl.TEXTURE_2D, null
+			# Bind texture to the context
+			gl.bindTexture gl.TEXTURE_2D, texture
+
+			# Texture coordinates increase up the Y axis, whereas image
+			# coordinates increase down the Y axis.
+			gl.pixelStorei gl.UNPACK_FLIP_Y_WEBGL, true
+			# Store image in texture
+			gl.texImage2D gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,
+			              image
+			# Generate mipmaps for scaling texture
+			gl.generateMipmap gl.TEXTURE_2D
+
+			# Unbind texture from the context
+			gl.bindTexture gl.TEXTURE_2D, null
 			texture

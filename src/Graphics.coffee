@@ -44,7 +44,7 @@ define (require) ->
 
 		initLoaders: ->
 			shaderLoader = new ShaderLoader '/res/shaders', @
-			textureLoader = new TextureLoader '/res/textures', @f
+			textureLoader = new TextureLoader '/res/textures', @
 			$.when(shaderLoader.load(), textureLoader.load()).then (shad, texts) =>
 				@shaders[s.name] = s for s in shad
 				@textures[t.name] = t for t in texts
