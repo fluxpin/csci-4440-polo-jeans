@@ -4,13 +4,12 @@
 		"type": "animated",
 		"width": 4,
 		"height": 1,
-		"animation": [
-			{
-				"name": "move",
+		"animation": {
+			"move": {
 				"delay": 8,
 				"frames": [0, 1, 2, 3]
 			}
-		]
+		}
 	},
 	{
 		"name": "foo.png",

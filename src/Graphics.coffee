@@ -89,9 +89,4 @@ define (require) ->
 
 			@squareTex = @f.createBuffer()
 			@f.bindBuffer @f.ARRAY_BUFFER, @squareTex
-			@f.bufferData @f.ARRAY_BUFFER, new Float32Array([
-				1.0, 1.0,
-				0.0, 1.0,
-				1.0, 0.0,
-				0.0, 0.0
-			]), @f.STATIC_DRAW
+			@f.bufferData @f.ARRAY_BUFFER, 32, @f.DYNAMIC_DRAW
