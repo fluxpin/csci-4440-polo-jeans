@@ -2,6 +2,7 @@ define (require) ->
 	M = require 'matrix'
 	GameObject = require 'GameObject'
 	PlayState = require './GameState'
+	ResourceCache = require 'ResourceCache'
 
 	class Dummy extends GameObject
 		constructor: ->
@@ -15,7 +16,8 @@ define (require) ->
 			@timer += 1
 
 		draw: (gl) ->
-			texture = gl.textures['foo.png']
+			cache = ResourceCache.getInstance()
+			texture = cache.get 'foo.png'
 
 			M.mat4.rotateZ gl.mvMatrix, gl.mvMatrix, @angle
 			gl.loadMatrices gl.prog

@@ -1,5 +1,6 @@
 define (require) ->
 	M = require 'matrix'
+	ResourceCache = require 'ResourceCache'
 	ShaderLoader = require 'Loader/ShaderLoader'
 	TextureLoader = require 'Loader/TextureLoader'
 
@@ -18,9 +19,6 @@ define (require) ->
 			# Projection and model-view matrices
 			@pMatrix = M.mat4.create()
 			@mvMatrix = M.mat4.create()
-
-			@shaders = {}
-			@textures = {}
 
 		###
 		Method: loadMatrices
@@ -45,15 +43,17 @@ define (require) ->
 		initLoaders: ->
 			shaderLoader = new ShaderLoader '/res/shaders', @
 			textureLoader = new TextureLoader '/res/textures', @
-			$.when(shaderLoader.load(), textureLoader.load()).then (shad, texts) =>
-				@shaders[s.name] = s for s in shad
-				@textures[t.name] = t for t in texts
+			cache = ResourceCache.getInstance()
+			$.when(shaderLoader.load(), textureLoader.load()).then (shaders, textures) =>
+				cache.store s for s in shaders
+				cache.store t for t in textures
 				@initShaders()
 				@initBuffers()
 
 		initShaders: ->
-			vert = @shaders['default.vert']
-			frag = @shaders['default.frag']
+			cache = ResourceCache.getInstance()
+			vert = cache.get 'default.vert'
+			frag = cache.get 'default.frag'
 			@prog = @f.createProgram()
 
 			@f.attachShader @prog, vert

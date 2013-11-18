@@ -22,7 +22,7 @@ define (require) ->
 
 	###
 	Class: TextureLoader
-	Load WebGL 2D textures
+	Load WebGL 2D textures.
 	###
 	class TextureLoader extends Loader
 		###
@@ -51,7 +51,7 @@ define (require) ->
 
 			if entry.type is 'animated'
 				texture.frames = enumFrames entry.width, entry.height
-				texture.animation = entry.animation
+				texture[k] = v for k, v of entry.animation
 			else if entry.type is 'static'
 				texture.frames = enumFrames 1, 1 # Just one 'frame'
 			else
