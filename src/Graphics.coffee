@@ -27,6 +27,7 @@ define (require) ->
 			@f.uniformMatrix4fv shader.pMatrix, false, @pMatrix
 			@f.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix
 
+		# Create WebGL context
 		_glFromDiv: (div, width, height) ->
 			canvas = document.createElement 'canvas'
 			canvas.width = width
@@ -36,7 +37,15 @@ define (require) ->
 			gl = (canvas.getContext 'webgl') or canvas.getContext 'experimental-webgl'
 			unless gl?
 				throw new Error (div.innerHTML = 'Unable to initialize WebGL')
+
+			# Enable transparency
+			gl.blendFunc gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
+			gl.enable gl.BLEND
+			# Clear screen to black
 			gl.clearColor 0.0, 0.0, 0.0, 1.0
+			# Texture coordinates increase up the Y axis, whereas image
+			# coordinates increase down the Y axis.
+			gl.pixelStorei gl.UNPACK_FLIP_Y_WEBGL, true
 			gl.clear gl.COLOR_BUFFER_BIT
 			gl
 

@@ -59,9 +59,6 @@ define (require) ->
 
 			# Bind texture to the context
 			gl.bindTexture gl.TEXTURE_2D, texture
-			# Texture coordinates increase up the Y axis, whereas image
-			# coordinates increase down the Y axis.
-			gl.pixelStorei gl.UNPACK_FLIP_Y_WEBGL, true
 			# Store image in texture
 			gl.texImage2D gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,
 			              image
