@@ -10,9 +10,9 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: (game,state) ->
-			if arguments.length is 2
-				@game = game
+		constructor: (state) ->
+			if arguments.length is 1
+				@game = state.game
 				@gameObjects = state.gameObjects
 				@gameObjects.forEach (obj) =>
 					if obj.gameState?
@@ -20,7 +20,6 @@ define (require) ->
 				@uniqueServer = state.uniqueServer
 				@camera = state.camera
 			else
-				@game = game
 				@camera = new Camera
 				@gameObjects = []
 				@uniqueServer = new UniqueServer
@@ -33,12 +32,13 @@ define (require) ->
 		addObject: (obj) ->
 			type obj, GameObject
 			@gameObjects.push obj
+			obj.gameState = @
 
 		removeObject: (obj) ->
 			type obj, GameObject
-			pos = @gameObjects.indexOf(obj)
+			pos = @gameObjects.indexOf obj
 			if pos >= 0
-				@gameObjects.splice(pos,1)
+				@gameObjects.splice(pos, 1)
 
 		step: ->
 
@@ -58,11 +58,11 @@ define (require) ->
 	class PausedState extends GameState
 		step: ->
 			@gameObjects.forEach (obj) =>
-				if obj.dead() is true
-					@removeObject(obj)
+				if obj.dead()
+					@removeObject obj
 
 		changeState: ->
-			@game.changeState(new PlayState(@game,@))
+			@game.changeState new PlayState @
 
 
 
@@ -78,7 +78,7 @@ define (require) ->
 			@gameObjects.forEach (obj) =>
 				obj.step()
 				if obj.dead() is true
-					@removeObject(obj)
+					@removeObject obj
 
 		changeState: ->
-			@game.changeState(new PausedState(@game,@))
+			@game.changeState new PausedState @

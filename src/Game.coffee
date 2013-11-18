@@ -21,7 +21,7 @@ define (require) ->
 		###
 		constructor: (div, width, height, state) ->
 			@gl = new Graphics div, width, height
-			@_state = state
+			@changeState state
 			@_ready = @gl.initLoaders()
 
 		###
@@ -48,3 +48,4 @@ define (require) ->
 		###
 		changeState: (state) ->
 			@_state = state
+			@_state.game = @

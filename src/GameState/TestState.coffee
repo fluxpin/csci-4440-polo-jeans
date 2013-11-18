@@ -41,8 +41,7 @@ define (require) ->
 
 
 	class Pauser extends GameObject
-		constructor: (state) ->
-			@gameState = state
+		constructor: ->
 			@timer = 0
 			@unpause = 0
 		###
@@ -61,7 +60,7 @@ define (require) ->
 
 
 	class TestState extends PlayState
-		constructor: (arg) ->
+		constructor: ->
 			super
 			@addObject new Dummy
-			@addObject new Pauser(@)
+			@addObject new Pauser
