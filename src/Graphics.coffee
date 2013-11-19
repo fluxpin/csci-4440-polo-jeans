@@ -61,7 +61,7 @@ define (require) ->
 			gl = @context
 
 			gl.uniformMatrix4fv shader.pMatrix, false, @pMatrix
-			gl.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix[0]
+			gl.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix
 
 		# Create WebGL context
 		_glFromDiv: (div, width, height) ->
