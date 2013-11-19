@@ -12,7 +12,71 @@
 		}
 	},
 	{
+		"name": "digits.png",
+		"type": "animated",
+		"width": 16,
+		"height": 1,
+		"animation": {
+			"0": {
+				"delay": 0,
+				"frames": [0]
+			},
+			"1": {
+				"delay": 0,
+				"frames": [1]
+			},
+			"2": {
+				"delay": 0,
+				"frames": [2]
+			},
+			"3": {
+				"delay": 0,
+				"frames": [3]
+			},
+			"4": {
+				"delay": 0,
+				"frames": [4]
+			},
+			"5": {
+				"delay": 0,
+				"frames": [5]
+			},
+			"6": {
+				"delay": 0,
+				"frames": [6]
+			},
+			"7": {
+				"delay": 0,
+				"frames": [7]
+			},
+			"8": {
+				"delay": 0,
+				"frames": [8]
+			},
+			"9": {
+				"delay": 0,
+				"frames": [9]
+			}
+		}
+	},
+	{
 		"name": "foo.png",
 		"type": "static"
+	},
+	{
+		"name": "paddle.png",
+		"type": "animated",
+		"width": 2,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
+			},
+			"move": {
+				"delay": 0,
+				"frames": [1]
+			}
+		}
 	}
 ]
