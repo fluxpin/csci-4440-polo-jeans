@@ -1,17 +1,11 @@
 define (require) ->
+	Singleton = require 'Singleton'
+
 	###
 	Class: ResourceCache
-	Provide a singleton cache for immutable resources. Get and store
-	resources by name.
+	Cache immutable resources. Identify resources only by name.
 	###
-	class ResourceCache
-		###
-		Method: getInstance
-		Construct or retrieve the ResourceCache instance.
-		###
-		@getInstance: ->
-			@_instance ?= new @ arguments...
-
+	class ResourceCache extends Singleton
 		###
 		Method: get
 		###
@@ -29,6 +23,12 @@ define (require) ->
 				@_cache[resource.name] = resource
 			else
 				fail "Immutable resource: #{resource.name}"
+
+		###
+		Method: storeAll
+		###
+		storeAll: (resources) ->
+			@store r for r in resources
 
 		# Private
 		constructor: ->

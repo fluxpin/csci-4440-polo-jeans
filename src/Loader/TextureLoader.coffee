@@ -1,5 +1,6 @@
 define (require) ->
 	$ = require 'jquery'
+	Graphics = require 'Graphics'
 	Loader = require 'Loader/Loader'
 
 	# Divide a normalized space into equal-sized frames where w is the width
@@ -25,14 +26,6 @@ define (require) ->
 	Load WebGL 2D textures.
 	###
 	class TextureLoader extends Loader
-		###
-		Method: constructor
-		Parameters:
-		path - Path to the resource's top-level directory.
-		gl - Graphics object representing the game's WebGL context.
-		###
-		constructor: (@_path, @_gl) ->
-
 		# Load image
 		_load: (entry) ->
 			image = $.Deferred()
@@ -44,7 +37,8 @@ define (require) ->
 
 		# Convert image to texture
 		_process: (entry, image) ->
-			gl = @_gl.f
+			graphics = Graphics.instance()
+			gl = graphics.context
 
 			texture = gl.createTexture()
 			texture.name = entry.name
@@ -57,13 +51,11 @@ define (require) ->
 			else
 				fail 'Invalid or unsupported texture type!'
 
-			# Bind texture to the context
 			gl.bindTexture gl.TEXTURE_2D, texture
 			# Store image in texture
 			gl.texImage2D gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,
 			              image
 			# Generate mipmaps for scaling texture
 			gl.generateMipmap gl.TEXTURE_2D
-			# Unbind texture from the context
 			gl.bindTexture gl.TEXTURE_2D, null
 			texture

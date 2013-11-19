@@ -1,5 +1,6 @@
 define (require) ->
 	$ = require 'jquery'
+	Graphics = require 'Graphics'
 	Loader = require 'Loader/Loader'
 
 	# Get text data using an AJAX request
@@ -11,14 +12,6 @@ define (require) ->
 	Load WebGL vertex and fragment shaders.
 	###
 	class ShaderLoader extends Loader
-		###
-		Method: constructor
-		Parameters:
-		path - Path to the resource's top-level directory.
-		gl - Graphics object representing the game's WebGL context.
-		###
-		constructor: (@_path, @_gl) ->
-
 		# Load shader source code
 		_load: (entry) ->
 			getText("#{@_path}/#{entry.name}").then (source) ->
@@ -26,7 +19,8 @@ define (require) ->
 
 		# Compile shader source code
 		_process: (entry, source) ->
-			gl = @_gl.f
+			graphics = Graphics.instance()
+			gl = graphics.context
 
 			if entry.type is 'vertex'
 				shader = gl.createShader gl.VERTEX_SHADER

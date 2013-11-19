@@ -2,7 +2,6 @@ define (require) ->
 	Camera = require 'Camera'
 	GameObject = require 'GameObject'
 	UniqueServer = require './UniqueServer'
-	Game = require 'Game'
 
 	###
 	Class: GameState
@@ -43,10 +42,10 @@ define (require) ->
 		step: ->
 
 		# draws all active objects.
-		draw: (gl) ->
-			@camera.draw gl
+		draw: ->
+			@camera.draw()
 			@gameObjects.forEach (obj) ->
-				obj.draw gl
+				obj.draw()
 
 		changeState: ->
 

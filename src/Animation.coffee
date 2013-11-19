@@ -1,4 +1,5 @@
 define (require) ->
+	Graphics = require 'Graphics'
 	ResourceCache = require 'ResourceCache'
 
 	###
@@ -8,14 +9,15 @@ define (require) ->
 		###
 		Method: constructor
 		###
-		constructor: (name, width, height, @_gl) ->
-			gl = @_gl.f
+		constructor: (texture, width, height) ->
+			cache = ResourceCache.instance()
+			graphics = Graphics.instance()
+			gl = graphics.context
 
-			# Get texture
-			cache = ResourceCache.getInstance()
-			@_texture = cache.get name
+			# Texture
+			@_texture = cache.get texture
 
-			# Create sprite geometry
+			# Geometry vertices
 			@_sprite = gl.createBuffer()
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
 			dx = width / 2.0
@@ -33,55 +35,61 @@ define (require) ->
 			@_timer = 0 # Frame delay timer
 			@_index = 0 # Index of current frame index
 
-			# Create texture frame
+			# Animation frame vertices
 			@_frame = gl.createBuffer()
 			gl.bindBuffer gl.ARRAY_BUFFER, @_frame
-			gl.bufferData gl.ARRAY_BUFFER, @_frames[@_indices[@_index]],
-			              gl.DYNAMIC_DRAW
+			gl.bufferData gl.ARRAY_BUFFER, @_frames[0], gl.DYNAMIC_DRAW
 
 		###
-		Method: set
+		Method: do
 		###
-		set: (animation) ->
-			gl = @_gl.f
+		do: (animation) ->
+			graphics = Graphics.instance()
+			gl = graphics.context
 
 			@_delay = @_texture[animation].delay
 			@_indices = @_texture[animation].frames
 			@_timer = 0
 			@_index = 0
 			gl.bindBuffer gl.ARRAY_BUFFER, @_frame
-			gl.bufferSubData gl.ARRAY_BUFFER, 0, @_frames[@_indices[@_index]]
+			gl.bufferSubData gl.ARRAY_BUFFER, 0, @_frames[@_indices[0]]
 
 		###
 		Method: step
 		###
 		step: ->
-			gl = @_gl.f
+			graphics = Graphics.instance()
+			gl = graphics.context
 
-			unless @_indices.length == 1
-				@_timer += 1
-				if @_timer >= @_delay
-					@_timer = 0
-					@_index = (@_index + 1) % @_indices.length
-					gl.bindBuffer gl.ARRAY_BUFFER, @_frame
-					gl.bufferSubData gl.ARRAY_BUFFER, 0, @_frames[@_indices[@_index]]
+			if @_indices.length == 1
+				return
+
+			@_timer += 1
+			if @_timer >= @_delay
+				@_timer = 0
+				@_index = (@_index + 1) % @_indices.length
+				gl.bindBuffer gl.ARRAY_BUFFER, @_frame
+				gl.bufferSubData gl.ARRAY_BUFFER, 0, @_frames[@_indices[@_index]]
 
 		###
 		Method: draw
 		###
 		draw: ->
-			gl = @_gl.f
+			cache = ResourceCache.instance()
+			shader = cache.get 'default.shad'
+			graphics = Graphics.instance()
+			gl = graphics.context
 
 			# Refresh transform matrices
-			@_gl.loadMatrices @_gl.prog
+			graphics.loadMatrices shader
 			# Bind geometry to the context
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
-			gl.vertexAttribPointer @_gl.prog.vertex, 2, gl.FLOAT, false, 0, 0
+			gl.vertexAttribPointer shader.vertex, 2, gl.FLOAT, false, 0, 0
 			gl.bindBuffer gl.ARRAY_BUFFER, @_frame
-			gl.vertexAttribPointer @_gl.prog.aTexCoord, 2, gl.FLOAT, false, 0, 0
+			gl.vertexAttribPointer shader.aTexCoord, 2, gl.FLOAT, false, 0, 0
 			# Bind texture to the context
 			gl.activeTexture gl.TEXTURE0
 			gl.bindTexture gl.TEXTURE_2D, @_texture
-			gl.uniform1i @_gl.prog.tex, 0
+			gl.uniform1i shader.tex, 0
 			# Draw the sprite
 			gl.drawArrays gl.TRIANGLE_STRIP, 0, 4

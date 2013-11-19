@@ -1,11 +1,14 @@
 define (require) ->
 	M = require 'matrix'
+	Animation = require 'Animation'
 	GameObject = require 'GameObject'
 	PlayState = require './GameState'
-	ResourceCache = require 'ResourceCache'
+	Graphics = require 'Graphics'
 
 	class Dummy extends GameObject
 		constructor: ->
+			@animation = new Animation 'ball.png', 200, 200
+			@animation.do 'move'
 			@angle = 0.0
 			@timer = 0
 
@@ -14,24 +17,12 @@ define (require) ->
 			if @angle >= 360.0
 				@angle -= 360.0
 			@timer += 1
+			@animation.step()
 
-		draw: (gl) ->
-			cache = ResourceCache.getInstance()
-			texture = cache.get 'foo.png'
-
-			M.mat4.rotateZ gl.mvMatrix, gl.mvMatrix, @angle
-			gl.loadMatrices gl.prog
-
-			gl.f.bindBuffer gl.f.ARRAY_BUFFER, gl.square
-			gl.f.vertexAttribPointer gl.prog.vertex, 2, gl.f.FLOAT, false, 0, 0
-			gl.f.bindBuffer gl.f.ARRAY_BUFFER, gl.squareTex
-			gl.f.bufferSubData gl.f.ARRAY_BUFFER, 0, texture.frames[0]
-			gl.f.vertexAttribPointer gl.prog.aTexCoord, 2, gl.f.FLOAT, false, 0, 0
-			gl.f.activeTexture gl.f.TEXTURE0
-			gl.f.bindTexture gl.f.TEXTURE_2D, texture
-			gl.f.uniform1i gl.prog.tex, 0
-
-			gl.f.drawArrays gl.f.TRIANGLE_STRIP, 0, gl.square.size
+		draw: ->
+			graphics = Graphics.instance()
+			M.mat4.rotateZ graphics.mvMatrix, graphics.mvMatrix, @angle
+			@animation.draw()
 
 		dead: ->
 			if @timer >= 200
