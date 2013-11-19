@@ -10,13 +10,11 @@ define (require) ->
 		Method: constructor
 		###
 		constructor: (div, width, height) ->
-			type width, Number
-			type height, Number
-
 			@context = @_glFromDiv div, width, height
 			# Projection and model-view matrices
 			@pMatrix = M.mat4.create()
 			@mvMatrix = M.mat4.create()
+			@_mvMatrixStack = []
 
 		###
 		Method: linkProgram
@@ -33,13 +31,37 @@ define (require) ->
 			program
 
 		###
+		Method: pushMatrix
+		###
+		pushMatrix: ->
+			copy = M.mat4.clone @mvMatrix
+			@_mvMatrixStack.push copy
+
+		###
+		Method: popMatrix
+		###
+		popMatrix: ->
+			if @_mvMatrixStack.length == 0
+				fail 'Invalid popMatrix'
+			@mvMatrix = @_mvMatrixStack.pop()
+
+		###
+		Method: drawAt
+		###
+		drawAt: (x, y, draw) ->
+			@pushMatrix()
+			M.mat4.translate @mvMatrix, @mvMatrix, [x, y, 0.0]
+			draw()
+			@popMatrix()
+
+		###
 		Method: loadMatrices
 		###
 		loadMatrices: (shader) ->
 			gl = @context
 
 			gl.uniformMatrix4fv shader.pMatrix, false, @pMatrix
-			gl.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix
+			gl.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix[0]
 
 		# Create WebGL context
 		_glFromDiv: (div, width, height) ->
