@@ -1,6 +1,6 @@
 define (require) ->
 	$ = require 'jquery'
-	Graphics = require 'Graphics'
+	Graphics = require 'Render/Graphics'
 	Loader = require 'Loader/Loader'
 
 	# Divide a normalized space into equal-sized frames where w is the width

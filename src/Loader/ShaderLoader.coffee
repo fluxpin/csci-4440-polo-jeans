@@ -1,6 +1,6 @@
 define (require) ->
 	$ = require 'jquery'
-	Graphics = require 'Graphics'
+	Graphics = require 'Render/Graphics'
 	Loader = require 'Loader/Loader'
 
 	# Get text data using an AJAX request

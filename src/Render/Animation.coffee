@@ -1,5 +1,5 @@
 define (require) ->
-	Graphics = require 'Graphics'
+	Graphics = require 'Render/Graphics'
 	ResourceCache = require 'ResourceCache'
 
 	###

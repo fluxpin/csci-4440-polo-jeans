@@ -1,6 +1,6 @@
 define (require) ->
 	M = require 'matrix'
-	Graphics = require 'Graphics'
+	Graphics = require 'Render/Graphics'
 	Vec2 = require 'Vec2'
 
 	###

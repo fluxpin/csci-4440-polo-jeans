@@ -1,6 +1,6 @@
 define (require) ->
-	Graphics = require 'Graphics'
-	Animation = require 'Animation'
+	Graphics = require 'Render/Graphics'
+	Animation = require 'Render/Animation'
 
 	###
 	Class: Sprite

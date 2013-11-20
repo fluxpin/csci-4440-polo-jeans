@@ -1,5 +1,5 @@
 define (require) ->
-	Camera = require 'Camera'
+	Camera = require 'Render/Camera'
 	GameObject = require 'GameObject'
 	UniqueServer = require 'GameStates/UniqueServer'
 

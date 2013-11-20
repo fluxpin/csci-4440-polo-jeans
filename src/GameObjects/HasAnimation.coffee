@@ -1,7 +1,7 @@
 define (require) ->
 	require 'meta'
 	GameObject = require './GameObject'
-	Graphics = require 'Graphics'
+	Graphics = require 'Render/Graphics'
 	Vec2 = require 'Vec2'
 
 
