@@ -10,5 +10,6 @@ define (require) ->
 	GO.ListensToControl = require 'GameObjects/ListensToControl'
 	GO.Sprite = require 'GameObjects/Sprite'
 	GO.MoveSprite = require 'GameObjects/MoveSprite'
+	GO.HasSounds = require 'GameObjects/HasSounds'
 
 	GO
