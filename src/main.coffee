@@ -7,16 +7,17 @@ requirejs.config
 		matrix: '../lib/gl-matrix-e53ec98/gl-matrix'
 		meta: './metaProgramming/index'
 		GameObject: './GameObjects/index'
-		GameState: './GameState'
+		GameState: './GameStates/index'
 		Vec2: './Vec2'
 
-use = (polo_jeans, test_state) ->
+use = (polo_jeans, pong) ->
 	div =
 		document.getElementById 'test-game'
 	testGame =
 		polo_jeans.testGame div
 
-	testGame.play test_state
+	#testGame.play test_state
+	testGame.play pong.startState
 
 err = (error) ->
 	console.trace()
@@ -28,4 +29,4 @@ if TEST
 	require ['./test'], (test) ->
 		test()
 else
-	require ['polo-jeans', 'GameState/TestState'], use, err
+	require ['polo-jeans',  './Pong/index'], use, err

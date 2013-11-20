@@ -1,5 +1,6 @@
 define (require) ->
 	Vec2 = require 'Vec2'
+	GameObject = require './GameObject'
 	Inits = require './Inits'
 	HasPos = require './HasPos'
 	###
@@ -7,7 +8,7 @@ define (require) ->
 	Provides funcs for any Body with a @vel.
 	Requires a function @move.
 	###
-	class Moves
+	class Moves extends GameObject
 		@does Inits, HasPos
 
 		@onInit ->
@@ -20,7 +21,7 @@ define (require) ->
 		?
 		At every step, I advance by my velocity.
 		###
-		@on 'step', ->
+		@onStep ->
 			@move @_vel
 
 		###
@@ -30,6 +31,14 @@ define (require) ->
 		accelerate: (accelerateBy) ->
 			type accelerateBy, Vec2
 			@_vel.add accelerateBy
+
+		bounceX: ->
+			@_vel.setX -@_vel.x()
+
+		bounceY: ->
+			@_vel.setY -@_vel.y()
+
+
 
 	describe 'Moves', ->
 		it 'moves', ->

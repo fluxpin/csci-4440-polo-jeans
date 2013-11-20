@@ -8,7 +8,7 @@ define (require) ->
 		window.requestAnimationFrame ? window.mozRequestAnimationFrame
 
 	check requestAnimationFrame?, ->
-		fail "Can't get 'requestAnimationFrame'"
+		"Can't get 'requestAnimationFrame'"
 
 	###
 	Class: Game
@@ -24,6 +24,7 @@ define (require) ->
 		constructor: (div, width, height) ->
 			Graphics.instance div, width, height
 			@_ready = @_initResources()
+			@wasError = no
 
 		###
 		Method: play
@@ -70,13 +71,15 @@ define (require) ->
 		#
 		_step: ->
 			try
-				requestAnimationFrame =>
-					@_step()
-				@_state.step()
-				@_state.draw()
+				unless @wasError
+					requestAnimationFrame =>
+						@_step()
+					@_state.step()
+					@_state.draw()
 
 			catch error
-				console.trace()
+				@wasError = yes
+				console.log error.stack
 				throw error
 
 		###

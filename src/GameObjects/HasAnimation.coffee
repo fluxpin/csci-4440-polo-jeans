@@ -1,20 +1,24 @@
 define (require) ->
 	require 'meta'
+	GameObject = require './GameObject'
+	Graphics = require 'Graphics'
+	Vec2 = require 'Vec2'
+
 
 	###
 	Trait: HasAnimation
 	Provides functions for objects that load animation data.
 	TODO TEST
 	###
-	class HasAnimation
+	class HasAnimation# extends GameObject
 		@does require './Inits'
 
 		###
 		Method: init
 		Loads my animation from my class name.
 		###
-		@onInit ->
-			todo
+		#@onInit ->
+		#	todo
 			#@animation =
 			#	loadAnimationFromName @className()
 
@@ -25,5 +29,24 @@ define (require) ->
 		#@something
 		#	@animation.step()
 
+		#@onStep ->
+		#	@animation.step()
 
-		null
+		drawAnimation: (position, rotation) ->
+			type position, Vec2
+			type rotation, Number
+
+			graphics = Graphics.instance()
+
+			graphics.drawAt position, =>
+				graphics.rotate rotation, =>
+					@animation.draw()
+
+		width: ->
+			@animation.width()
+
+		height: ->
+			@animation.height()
+
+		size: ->
+			new Vec2 @width(), @height()

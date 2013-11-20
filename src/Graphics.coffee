@@ -1,6 +1,7 @@
 define (require) ->
 	M = require 'matrix'
 	Singleton = require 'Singleton'
+	Vec2 = require 'Vec2'
 
 	###
 	Class: Graphics
@@ -48,10 +49,25 @@ define (require) ->
 		###
 		Method: drawAt
 		###
-		drawAt: (x, y, draw) ->
+		drawAt: (vec, draw) ->
+			type vec, Vec2
+			type draw, Function
+
+			@_withMatrix =>
+				M.mat4.translate @mvMatrix, @mvMatrix, [vec.x(), vec.y(), 0.0]
+				draw()
+
+		rotate: (angle, draw) ->
+			type angle, Number
+			type draw, Function
+
+			@_withMatrix =>
+				M.mat4.rotateZ @mvMatrix, @mvMatrix, angle
+				draw()
+
+		_withMatrix: (inMatrix) ->
 			@pushMatrix()
-			M.mat4.translate @mvMatrix, @mvMatrix, [x, y, 0.0]
-			draw()
+			inMatrix()
 			@popMatrix()
 
 		###

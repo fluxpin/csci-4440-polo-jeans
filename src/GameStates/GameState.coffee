@@ -1,7 +1,7 @@
 define (require) ->
 	Camera = require 'Camera'
 	GameObject = require 'GameObject'
-	UniqueServer = require './UniqueServer'
+	UniqueServer = require 'GameStates/UniqueServer'
 
 	###
 	Class: GameState
@@ -49,35 +49,6 @@ define (require) ->
 
 		changeState: ->
 
-	###
-	Class: PausedState
-	Step should not actually perform anything since the game is paused.
-	Only cleanup of dead objects is done.
-	###
-	class PausedState extends GameState
-		step: ->
-			@gameObjects.forEach (obj) =>
-				if obj.dead()
-					@removeObject obj
-
-		changeState: ->
-			@game.changeState new PlayState @
 
 
 
-	###
-	Class: PlayState
-	The standard gamestate with both play and draw functioning on all objects.
-	###
-	class PlayState extends GameState
-		# step through a single action for all the game objects active in this
-		# gamestate.
-		step: ->
-			@camera.step()
-			@gameObjects.forEach (obj) =>
-				obj.step()
-				if obj.dead() is true
-					@removeObject obj
-
-		changeState: ->
-			@game.changeState new PausedState @

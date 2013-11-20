@@ -8,6 +8,9 @@ define (require) ->
 	class GameObject
 		@does (require './CallsBack'), require './Inits'
 
+		@onStep = (stepper) ->
+			@on 'step', stepper
+
 		constructor: ->
 			@initialize()
 
@@ -27,15 +30,6 @@ define (require) ->
 		draw: ->
 
 		###
-		Method: gameState
-		Fetches the current GameState.
-		###
-		gameState: ->
-			todo
-			# Since only objects in the current GameState should be doing anything,
-			# this should be the GameState intended for this object.
-
-		###
 		Method: the
 		Fetches the Unique object of this type, if it exits.
 		Otherwise returns undefined.
@@ -44,3 +38,9 @@ define (require) ->
 			@gameState.uniqueServer.the type
 
 		dead: ->
+			false
+
+		each: (type, fun) ->
+			@gameState.gameObjects.forEach (obj) ->
+				if obj.isA type
+					fun obj

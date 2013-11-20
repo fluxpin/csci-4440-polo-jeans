@@ -13,8 +13,13 @@ define (require) ->
 		###
 		check: (condition, error_message_maker) ->
 			unless condition
-				err = error_message_maker()
-				if err instanceof String
+				console.trace()
+				err =
+					if error_message_maker?
+						error_message_maker()
+					else
+						"Check failed"
+				if typeof err is 'string'
 					fail err
 				else
 					throw err

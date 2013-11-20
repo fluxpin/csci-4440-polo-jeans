@@ -1,6 +1,7 @@
 define (require) ->
 	Vec2 = require 'Vec2'
 	Inits = require './Inits'
+	Rect = require 'Rect'
 	###
 	Trait: HasPos
 	Provides funcs for anything with a @pos
@@ -18,8 +19,8 @@ define (require) ->
 		Method: warpTo
 		Move immediately to the given destination.
 		###
-		warpTo: (newPos) ->
-			@_pos.setTo newPos
+		warp: (newPos) ->
+			@pos().setTo newPos
 
 		###
 		Method: move
@@ -28,23 +29,28 @@ define (require) ->
 			moveBy - Vec of amount to move by.
 		###
 		move: (moveBy) ->
-			@_pos.add moveBy
+			@pos().add moveBy
 
 		###
 		Method: collides
 		Whether I collide with it.
 		Parameters:
-			other - A Body I might collide with.
+			other - A HasPos I might collide with.
 		###
-		#collides: (other) ->
-			#@shape.collides other.shape
+		collides: (other) ->
+			@rect().collides other.rect()
+
+		rect: ->
+			Rect.centered @pos(), @size()
 
 		###
-		Method: eachCollidingFrom
-		Calls the func on each colliding body in the list.
+		Method: eachColliding
+		Calls the func on each colliding body in the game.
 		###
-		#eachCollidingFrom: (list, func) ->
-		#	(list.filter @collides).forEach func
+		eachColliding: (type, fun) ->
+			@each type, (obj) =>
+				if @collides obj
+					fun obj
 
 
 		null

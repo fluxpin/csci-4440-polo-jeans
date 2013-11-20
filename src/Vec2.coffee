@@ -1,17 +1,27 @@
 define (require) ->
 	class Vec2
 		constructor: (x, y) ->
-			unless x?
-				x = y = 0
-			type x, Number
-			type y, Number
-			@_x = x
-			@_y = y
+			@setX x
+			@setY y
 
 		x: ->
 			@_x
+
 		y: ->
 			@_y
+
+		setX: (x) ->
+			type x, Number
+			check not isNaN x
+			@_x = x
+
+		setY: (y) ->
+			type y, Number
+			check not isNaN y
+			@_y = y
+
+		positive: ->
+			@x() > 0 and @y() > 0
 
 		add: (oth) ->
 			type oth, Vec2
@@ -23,6 +33,9 @@ define (require) ->
 			@_x *= scale
 			@_y *= scale
 
+		half: ->
+			@scale 1 / 2
+
 		addScaled: (oth, scale) ->
 			@_x += oth._x * scale
 			@_y += oth._y * scale
@@ -30,6 +43,9 @@ define (require) ->
 		setTo: (oth) ->
 			@_x = oth._x
 			@_y = oth._y
+
+		copy: ->
+			new Vec @x(), @y()
 
 		@zero = ->
 			new Vec2 0, 0

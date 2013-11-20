@@ -1,6 +1,7 @@
 define (require) ->
 	M = require 'matrix'
 	Graphics = require 'Graphics'
+	Vec2 = require 'Vec2'
 
 	###
 	Class: Camera
@@ -38,4 +39,8 @@ define (require) ->
 		###
 		Method: lookAt
 		###
-		lookAt: (@_x, @_y) ->
+		lookAt: (pos) ->
+			type pos, Vec2
+			@_x = pos.x()
+			@_y = pos.y()
+

@@ -2,9 +2,9 @@
 
 execHandle = (after) ->
 	(err, stdout, stderr) ->
+		console.log stdout + stderr
 		if err?
 			throw err
-		console.log stdout + stderr
 		after()
 
 run = (command) ->

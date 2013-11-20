@@ -67,6 +67,9 @@ define (require) ->
 		diff: (x) ->
 			(@ - x).abs()
 
+		half: ->
+			@ / 2
+
 		###
 		Method: oppositeSign
 		Whether two numbers are on different sides of zero.

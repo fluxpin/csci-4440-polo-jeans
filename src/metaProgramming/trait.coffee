@@ -74,8 +74,9 @@ define (require) ->
 				traitMembers trait_ctr
 
 			(Object.keys trait).forEach (name) =>
-				clazz[name] =
-					traitMerge @, trait_ctr, clazz[name], trait[name], name
+				if name != 'constructor'
+					clazz[name] =
+						traitMerge @, trait_ctr, clazz[name], trait[name], name
 
 			trait._on_does?.data.forEach (onDoes) =>
 				onDoes.call trait_ctr, @

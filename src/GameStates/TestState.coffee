@@ -2,7 +2,7 @@ define (require) ->
 	M = require 'matrix'
 	Animation = require 'Animation'
 	GameObject = require 'GameObject'
-	PlayState = require './GameState'
+	PlayState = require './PlayState'
 	Graphics = require 'Graphics'
 
 	class Dummy extends GameObject

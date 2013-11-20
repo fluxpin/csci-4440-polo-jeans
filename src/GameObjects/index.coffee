@@ -1,8 +1,6 @@
 define (require) ->
 	GO = require 'GameObjects/GameObject'
 
-	r = (x) ->
-		require "GameObjects/#{x}"
 	GO.CallsBack = require 'GameObjects/CallsBack'
 	GO.Inits = require 'GameObjects/Inits'
 	GO.HasAnimation = require 'GameObjects/HasAnimation'

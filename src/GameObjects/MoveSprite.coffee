@@ -6,7 +6,9 @@ define (require) ->
 	Most things should inherit from this.
 	TODO TEST
 	###
-	class window.MoveSprite extends require './Sprite'
+	Sprite = require './Sprite'
+
+	class MoveSprite extends Sprite
 		@does Moves
 
-		init: ->
+

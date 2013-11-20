@@ -1,18 +1,18 @@
 [
 	{
-		"name": "ball.png",
+		"name": "Ball.png",
 		"type": "animated",
 		"width": 4,
 		"height": 1,
 		"animation": {
-			"move": {
+			"idle": {
 				"delay": 8,
 				"frames": [0, 1, 2, 1]
 			}
 		}
 	},
 	{
-		"name": "digits.png",
+		"name": "Digits.png",
 		"type": "animated",
 		"width": 16,
 		"height": 1,
@@ -60,11 +60,11 @@
 		}
 	},
 	{
-		"name": "foo.png",
+		"name": "Foo.png",
 		"type": "static"
 	},
 	{
-		"name": "paddle.png",
+		"name": "Paddle.png",
 		"type": "animated",
 		"width": 2,
 		"height": 1,

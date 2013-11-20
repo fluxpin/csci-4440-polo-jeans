@@ -9,7 +9,7 @@ define (require) ->
 		###
 		Method: constructor
 		###
-		constructor: (texture, width, height) ->
+		constructor: (texture, @_width, @_height) ->
 			cache = ResourceCache.instance()
 			graphics = Graphics.instance()
 			gl = graphics.context
@@ -20,8 +20,8 @@ define (require) ->
 			# Geometry vertices
 			@_sprite = gl.createBuffer()
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
-			dx = width / 2.0
-			dy = height / 2.0
+			dx = @width() / 2.0
+			dy = @height() / 2.0
 			gl.bufferData gl.ARRAY_BUFFER, new Float32Array([
 				 dx,  dy,
 				-dx,  dy,
@@ -39,6 +39,11 @@ define (require) ->
 			@_frame = gl.createBuffer()
 			gl.bindBuffer gl.ARRAY_BUFFER, @_frame
 			gl.bufferData gl.ARRAY_BUFFER, @_frames[0], gl.DYNAMIC_DRAW
+
+		width: ->
+			@_width
+		height: ->
+			@_height
 
 		###
 		Method: do
