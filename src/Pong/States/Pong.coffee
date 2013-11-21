@@ -35,12 +35,12 @@ define (require) ->
 			@_height
 
 		#go to win state
-		win: (whoLost) ->
-			if whoLost is 'wasd'
-				@game.createState 'win', new WinArrows
+		win: (whoWon) ->
+			if whoWon is 'wasd'
+				@game.createState 'win', new WinWASD
 				@game.changeState 'win'
 			else
-				@game.createState 'win', new WinWASD
+				@game.createState 'win', new WinArrows
 				@game.changeState 'win'
 
 		#switch between pause and play states

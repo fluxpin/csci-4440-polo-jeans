@@ -103,7 +103,7 @@ define (require) ->
 
 			# Refresh transform matrices
 			graphics.loadMatrices shader
-			#gl.uniform1f shader.layer, @layer
+			gl.uniform1f shader.layer, @layer
 			# Bind geometry to the context
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
 			gl.vertexAttribPointer shader.vertex, 2, gl.FLOAT, false, 0, 0
