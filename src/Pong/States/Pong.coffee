@@ -3,8 +3,7 @@ define (require) ->
 	GameState = require 'GameState'
 	Ball = require '../Objects/Ball'
 	Paddle = require '../Objects/Paddle'
-	WinWASD = require './WinWASD'
-	WinArrows = require './WinArrows'
+	Win = require './Win'
 	ImageObject = require '../Objects/ImageObject'
 	PauseToggle = require '../Objects/PauseToggle'
 	ScoreKeeper = require '../Objects/ScoreKeeper'
@@ -16,9 +15,7 @@ define (require) ->
 	###
 	class Pong extends PlayState
 		constructor:  (state) ->
-			@_width = 1024
-			@_height = 512
-			super(state)
+			super 1024, 512, state
 			unless state instanceof GameState
 				paddleMargin = 64
 				@addObject new ImageObject 'Arena.png', 1024, 1024
@@ -36,12 +33,8 @@ define (require) ->
 
 		#go to win state
 		win: (whoWon) ->
-			if whoWon is 'wasd'
-				@game.createState 'win', new WinWASD
-				@game.changeState 'win'
-			else
-				@game.createState 'win', new WinArrows
-				@game.changeState 'win'
+			@game.createState 'win', new Win whoWon
+			@game.changeState 'win'
 
 		#switch between pause and play states
 		changeState: ->

@@ -29,7 +29,6 @@ define (require) ->
 		###
 		draw: ->
 			super()
-			@animation.step()
 			@drawAnimation @pos(), @rotation()
 
 		rotation: ->

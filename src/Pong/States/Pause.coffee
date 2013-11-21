@@ -7,16 +7,9 @@ define (require) ->
 	###
 	class Pause extends PausedState
 		constructor:  (state) ->
-			@_width = 1024
-			@_height = 512
-			super(state)
+			super 1024, 512, state
 			@pauseImage = @addObject new ImageObject 'Pause.png', 512, 512
-		width: ->
-			@_width
-		height: ->
-			@_height
-		
-		
+
 		changeState: ->
 			Pong = require './Pong'
 			@removeObject @pauseImage
@@ -25,18 +18,17 @@ define (require) ->
 			else
 				@game.createState 'pong', new Pong @
 				@game.changeState 'pong'
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
+
+
+
+
+
+
+

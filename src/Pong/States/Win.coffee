@@ -8,12 +8,17 @@ define (require) ->
 	###
 	A state that displays that the arrow key player won
 	###
-	class WinArrows extends GameState
-		constructor: ->
-			@_width = 1024
-			@_height = 512
-			super()
-			@addObject new ImageObject 'WinArrows.png', 512, 512
+	class Win extends GameState
+		constructor: (whoWon) ->
+			check whoWon is 'wasd' or whoWon is 'arrows'
+			super 1024, 512
+			imgName =
+				switch whoWon
+					when 'wasd'
+						'WinWASD.png'
+					when 'arrows'
+						'WinArrows.png'
+			@addObject new ImageObject imgName, 512, 512
 			@addObject new Controller
 			@addObject new SoundPlayer 'win.ogg'
 			@camera.lookAt Vec2.zero()
@@ -23,3 +28,8 @@ define (require) ->
 			@_width
 		height: ->
 			@_height
+
+		changeState: ->
+			Pong = require './Pong'
+			@game.createState 'play', new Pong
+			@game.changeState 'play'

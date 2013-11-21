@@ -12,7 +12,7 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: (state) ->
+		constructor: (@_width, @_height, state) ->
 			GameState.current = @
 
 			if state instanceof GameState
@@ -43,6 +43,11 @@ define (require) ->
 			@uniqueServer.remove obj
 			@gameObjects.remove obj
 			obj
+
+		width: ->
+			@_width
+		height: ->
+			@_height
 
 		step: ->
 

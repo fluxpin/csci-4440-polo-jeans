@@ -60,7 +60,7 @@
     },
     "newlines_after_classes": {
         "value": 3,
-        "level": "error"
+        "level": "ignore"
     },
     "no_stand_alone_at": {
         "level": "ignore"

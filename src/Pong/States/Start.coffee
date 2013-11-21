@@ -10,19 +10,12 @@ define (require) ->
 	###
 	class Start extends GameState
 		constructor: ->
-			@_width = 1024
-			@_height = 512
-			super()
+			super 1024, 512
 			@addObject new ImageObject 'Start.png', 512, 512
 			@addObject new Controller
 			@addObject new PauseToggle
 			@camera.lookAt Vec2.zero()
 			@camera.moveInside @rect()
-
-		width: ->
-			@_width
-		height: ->
-			@_height
 
 		changeState: ->
 			Pong = require './Pong'

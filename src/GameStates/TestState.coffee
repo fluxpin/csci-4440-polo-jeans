@@ -52,6 +52,6 @@ define (require) ->
 
 	class TestState extends PlayState
 		constructor: ->
-			super
+			super 800, 600
 			@addObject new Dummy
 			@addObject new Pauser

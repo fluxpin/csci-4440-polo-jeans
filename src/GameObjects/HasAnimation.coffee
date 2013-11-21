@@ -10,27 +10,15 @@ define (require) ->
 	Provides functions for objects that load animation data.
 	TODO TEST
 	###
-	class HasAnimation# extends GameObject
+	class HasAnimation extends GameObject
 		@does require './Inits'
-
-		###
-		Method: init
-		Loads my animation from my class name.
-		###
-		#@onInit ->
-		#	todo
-			#@animation =
-			#	loadAnimationFromName @className()
 
 		###
 		Method: step
 		Tells my animation to step.
 		###
-		#@something
-		#	@animation.step()
-
-		#@onStep ->
-		#	@animation.step()
+		@onStep ->
+			@animation.step()
 
 		drawAnimation: (position, rotation) ->
 			type position, Vec2

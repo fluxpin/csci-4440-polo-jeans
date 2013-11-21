@@ -3,6 +3,8 @@ define (require) ->
 	{ Sprite, HasSounds } = GameObject
 	Vec2 = require 'Vec2'
 
+	winScore = 10
+
 	class Counter extends Sprite
 		@does HasSounds
 
@@ -10,17 +12,17 @@ define (require) ->
 			super()
 			@animation.setLayer 5
 			@count = 0
-			y = @gameState().height()/2 - @animationSize()[1]
+			y = @gameState().height()/2 - @animationSize()[1]/2
 			@warp new Vec2 x, y
 
 			@addSound 'score', "res/sounds/score-#{@name}.ogg"
 
-		animationSize: -> [32, 32]
+		animationSize: -> [64, 64]
 
 		increase: ->
 			@count += 1
 			@playSound 'score'
-			if @count >= 10
+			if @count >= winScore
 				yes
 			else
 				@animation.do @count.toString()

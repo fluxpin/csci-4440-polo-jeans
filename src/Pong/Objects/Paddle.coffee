@@ -31,7 +31,7 @@ define (require) ->
 			@addSound 'bounce', "res/sounds/bounce-#{controlType}.wav"
 
 		makeBoundRect: (isLeft) ->
-			marginX = 64
+			marginX = 128
 			marginY = 32
 			top = @gameState().height()/2 - marginY
 			bottom = -top
@@ -49,7 +49,7 @@ define (require) ->
 		speed: ->
 			6
 
-		animationSize: -> [32, 256]
+		animationSize: -> [48, 256]
 
 		bouncedOffOf: ->
 			@playSound 'bounce'
