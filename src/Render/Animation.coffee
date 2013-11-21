@@ -32,7 +32,7 @@ define (require) ->
 				 dx, -dy
 				-dx, -dy
 			]), gl.STATIC_DRAW
-			@layer = 0.4 # Animation layer
+			@layer = 0.0 # Animation layer
 
 			@_frames = @_texture.frames # Animation frames
 			@_delay = 0 # Frame delay for current animation
