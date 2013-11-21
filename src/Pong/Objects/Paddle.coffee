@@ -34,6 +34,7 @@ define (require) ->
 			super()
 
 			@stopMoving()
+			@animation.do 'idle'
 			accs = [
 				[@controls.left, Vec2.left @speed()],
 				[@controls.right, Vec2.right @speed()],
@@ -43,4 +44,5 @@ define (require) ->
 			accs.forEach (pair) =>
 				[key, vec] = pair
 				if @isButtonDown key
+					@animation.do 'move'
 					@accelerate vec
