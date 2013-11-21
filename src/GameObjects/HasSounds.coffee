@@ -25,8 +25,10 @@ define (require) ->
 		Creates an html5 audio tag for a given sound and starts playing it
 		###
 		playSound: (name) ->
-			@playingSounds[name] = new Audio(@soundPaths[name])
-			@playingSounds[name].play()
+			audio = new Audio @soundPaths[name]
+			@playingSounds[name] = audio
+			audio.volume = 0.5
+			audio.play()
 
 		###
 		Method: pauseSounds

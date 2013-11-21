@@ -1,9 +1,9 @@
 define (require) ->
-	{ MoveSprite, ListensToControl } = require 'GameObject'
+	{ MoveSprite, ListensToControl, HasSounds } = require 'GameObject'
 	Vec2 = require 'Vec2'
 
 	class Paddle extends MoveSprite
-		@does ListensToControl
+		@does ListensToControl, HasSounds
 
 		constructor: (x, controlType) ->
 			super()
@@ -25,10 +25,16 @@ define (require) ->
 					else
 						fail "Bad control type: #{controlType}"
 
+			@addSound 'bounce', "res/sounds/bounce-#{controlType}.wav"
+
 		speed: ->
 			6
 
 		animationSize: -> [32, 256]
+
+		bouncedOffOf: ->
+			@playSound 'bounce'
+
 
 		step: ->
 			super()

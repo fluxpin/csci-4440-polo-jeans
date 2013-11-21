@@ -126,5 +126,17 @@
 				"frames": [0]
 			}
 		}
+	},
+	{
+		"name": "Start.png",
+		"type": "animated",
+		"width": 1,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
+			}
+		}
 	}
 ]

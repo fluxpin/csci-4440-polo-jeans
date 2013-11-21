@@ -1,6 +1,7 @@
 define (require) ->
 	GameState = require 'GameState'
 	ImageObject = require '../Objects/ImageObject'
+	SoundPlayer = require '../Objects/SoundPlayer'
 	Controller = (require 'GameObject').Controller
 	Vec2 = require 'Vec2'
 
@@ -14,6 +15,7 @@ define (require) ->
 			super()
 			@addObject new ImageObject 'WinWASD.png', 512, 512
 			@addObject new Controller
+			@addObject new SoundPlayer 'win.ogg'
 			@camera.lookAt Vec2.zero()
 			@camera.moveInside @rect()
 

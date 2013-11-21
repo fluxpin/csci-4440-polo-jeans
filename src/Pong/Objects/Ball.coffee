@@ -1,16 +1,13 @@
 define (require) ->
-	MoveSprite = (require 'GameObject').MoveSprite
-	HasSounds = (require 'GameObject').HasSounds
+	{ MoveSprite } = require 'GameObject'
 	Vec2 = require 'Vec2'
 	Paddle = require './Paddle'
 	ScoreKeeper = require './ScoreKeeper'
 
 	class Ball extends MoveSprite
-		@does HasSounds
 
 		constructor: ->
 			super()
-			@addSound 'bounce','res/sounds/bounce.wav'
 			@reset()
 
 		reset: ->
@@ -39,7 +36,7 @@ define (require) ->
 					when 'top'
 						@bounceDown()
 
-				#@playSound 'bounce'
+				p.bouncedOffOf()
 
 			gsr = @gameState().rect()
 
@@ -49,10 +46,10 @@ define (require) ->
 				@bounceUp()
 
 			if @rect().left() < gsr.left()
-				(@the ScoreKeeper).scoreLeft()
+				(@the ScoreKeeper).scoreRight()
 				@bounceRight()
 			else if @rect().right() > gsr.right()
-				(@the ScoreKeeper).scoreRight()
+				(@the ScoreKeeper).scoreLeft()
 				@bounceLeft()
 
 			@gameState().camera.lookAt @pos()
