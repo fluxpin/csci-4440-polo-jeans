@@ -9,6 +9,7 @@ requirejs.config
 		GameObject: './GameObjects/index'
 		GameState: './GameStates/index'
 		Vec2: './Vec2'
+		Rect: './Rect'
 
 use = (polo_jeans, pong) ->
 	div =

@@ -8,7 +8,7 @@ define (require) ->
 	require 'polo-jeans'
 	require 'GameObject'
 
-	->
+	return ->
 		jasmineEnv =
 			jasmine.getEnv()
 		jasmineEnv.updateInterval =

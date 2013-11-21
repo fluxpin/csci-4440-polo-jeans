@@ -1,14 +1,17 @@
 define (require) ->
 	{ MoveSprite, ListensToControl, HasSounds } = require 'GameObject'
 	Vec2 = require 'Vec2'
+	Rect = require 'Rect'
 
 	class Paddle extends MoveSprite
 		@does ListensToControl, HasSounds
 
-		constructor: (x, controlType) ->
+		constructor: (isLeft, controlType) ->
 			super()
+			type isLeft, Boolean
 
-			@warp new Vec2 x, 0
+			@boundRect = @makeBoundRect isLeft
+			@warp @boundRect.center()
 
 			@controls =
 				switch controlType
@@ -26,6 +29,22 @@ define (require) ->
 						fail "Bad control type: #{controlType}"
 
 			@addSound 'bounce', "res/sounds/bounce-#{controlType}.wav"
+
+		makeBoundRect: (isLeft) ->
+			marginX = 64
+			marginY = 32
+			top = @gameState().height()/2 - marginY
+			bottom = -top
+
+			x = @gameState().width()/2 - marginX
+
+			[left, right] =
+				if isLeft
+					[-x, -marginX]
+				else
+					[marginX, x]
+
+			new Rect left, bottom, right, top
 
 		speed: ->
 			6
@@ -52,3 +71,5 @@ define (require) ->
 				if @isButtonDown key
 					@animation.do 'move'
 					@accelerate vec
+
+			@moveInside @boundRect

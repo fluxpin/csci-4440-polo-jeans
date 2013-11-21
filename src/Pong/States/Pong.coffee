@@ -24,8 +24,8 @@ define (require) ->
 				@addObject new ImageObject 'Arena.png', 1024, 1024
 				@addObject new Controller
 				@addObject ball = new Ball
-				@addObject new Paddle (-@width()/2 + paddleMargin), 'wasd'
-				@addObject new Paddle (@width()/2 - paddleMargin), 'arrows'
+				@addObject new Paddle yes, 'wasd'
+				@addObject new Paddle no, 'arrows'
 				#bug - changeState called twice on enter if re-added here.
 				#@addObject new PauseToggle
 				@addObject new ScoreKeeper
@@ -33,7 +33,7 @@ define (require) ->
 			@_width
 		height: ->
 			@_height
-		
+
 		#go to win state
 		win: (whoLost) ->
 			if whoLost is 'wasd'

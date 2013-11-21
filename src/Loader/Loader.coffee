@@ -28,7 +28,9 @@ define (require) ->
 		# Define how to load a type of resource. Return a deferred tuple of
 		# entry and resource.
 		_load: (entry) ->
+			null
 
 		# Define how to transform a resource into processed form. Return the
 		# processed resource.
 		_process: (entry, resource) ->
+			null

@@ -18,7 +18,7 @@ define (require) ->
 					if error_message_maker?
 						error_message_maker()
 					else
-						"Check failed"
+						"Check failed!"
 				if typeof err is 'string'
 					fail err
 				else

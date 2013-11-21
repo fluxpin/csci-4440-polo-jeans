@@ -17,6 +17,7 @@ define (require) ->
 		###
 
 
+
 	###
 	Class: TraitMergingList
 	Maintains a list of anything.
