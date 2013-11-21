@@ -98,7 +98,7 @@ define (require) ->
 			gl.blendFunc gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
 			gl.enable gl.BLEND
 			# Enable depth
-			gl.enable gl.DEPTH_TEST
+			#gl.enable gl.DEPTH_TEST
 			# Clear screen to black
 			gl.clearColor 0.0, 0.0, 0.0, 1.0
 			# Texture coordinates increase up the Y axis, whereas image

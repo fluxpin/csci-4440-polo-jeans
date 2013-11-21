@@ -12,15 +12,12 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: ->
+		constructor: (state) ->
 			GameState.current = @
 
-			if arguments.length is 1
+			if state instanceof GameState
 				@game = state.game
 				@gameObjects = state.gameObjects
-				@gameObjects.forEach (obj) =>
-					if obj.gameState?
-						obj.gameState = @
 				@uniqueServer = state.uniqueServer
 				@camera = state.camera
 			else
@@ -39,11 +36,13 @@ define (require) ->
 			type obj, GameObject
 			@gameObjects.push obj
 			@uniqueServer.add obj
+			obj
 
 		removeObject: (obj) ->
 			type obj, GameObject
 			@uniqueServer.remove obj
 			@gameObjects.remove obj
+			obj
 
 		step: ->
 
@@ -54,5 +53,9 @@ define (require) ->
 				obj.draw()
 
 		changeState: ->
+
+		reclaimCurrent: ->
+			GameState.current = @
+
 
 

@@ -1,6 +1,5 @@
 define (require) ->
 	GameState = require './GameState'
-
 	###
 	Class: PlayState
 	The standard gamestate with both play and draw functioning on all objects.

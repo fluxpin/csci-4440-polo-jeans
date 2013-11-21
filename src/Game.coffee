@@ -23,6 +23,7 @@ define (require) ->
 		###
 		constructor: (div, width, height) ->
 			Graphics.instance div, width, height
+			@_states = {}
 			@_ready = @_initResources()
 			@wasError = no
 
@@ -31,7 +32,8 @@ define (require) ->
 		###
 		play: (state) ->
 			@_ready.then =>
-				@changeState new state
+				@createState 'start', new state
+				@changeState 'start'
 				@_step()
 
 		#
@@ -86,6 +88,13 @@ define (require) ->
 		###
 		Method: changeState
 		###
-		changeState: (state) ->
-			@_state = state
+		changeState: (name) ->
+			@_state = @_states[name]
 			@_state.game = @
+			@_state.reclaimCurrent()
+			
+		createState: (name, state) ->
+			@_states[name] = state
+			
+		containsState:(name) ->
+			@_states.hasOwnProperty(name)

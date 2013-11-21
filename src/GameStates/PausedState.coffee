@@ -1,6 +1,5 @@
 define (require) ->
 	GameState = require './GameState'
-
 	###
 	Class: PausedState
 	Step should not actually perform anything since the game is paused.

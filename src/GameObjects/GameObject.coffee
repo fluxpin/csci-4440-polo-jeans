@@ -20,7 +20,7 @@ define ['require', 'GameState'], (require, GameState) ->
 			@initialize()
 
 		gameState: ->
-			@_gameState
+			@_gameState = GameState.current
 
 		###
 		Method: step

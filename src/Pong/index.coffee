@@ -1,5 +1,5 @@
 define (require) ->
-	StartState = require './States/Pong'
+	StartState = require './States/Start'
 	#Objects = require './Objects'
 
 	#game: (div) ->

@@ -35,6 +35,7 @@ define (require) ->
 						@bounceLeft()
 					when 'bottom'
 						@bounceUp()
+						@bounceUp()
 					when 'top'
 						@bounceDown()
 
