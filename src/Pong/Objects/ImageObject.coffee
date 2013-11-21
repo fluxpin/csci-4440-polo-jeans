@@ -6,6 +6,7 @@ define (require) ->
 	class ImageObject extends MoveSprite
 		constructor: (@imageName, @sizeX, @sizeY) ->
 			super()
+			@animation.setLayer -1
 
 		animationName: ->
 			@imageName

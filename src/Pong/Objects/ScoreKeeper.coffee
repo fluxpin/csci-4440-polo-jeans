@@ -6,6 +6,7 @@ define (require) ->
 	class Counter extends Sprite
 		constructor: (x, @name) ->
 			super()
+			@animation.setLayer 1
 			@count = 0
 			y = @gameState().height()/2 - @animationSize()[1]
 			@warp new Vec2 x, y

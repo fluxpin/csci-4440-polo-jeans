@@ -9,7 +9,6 @@ define (require) ->
 		# step through a single action for all the game objects active in this
 		# gamestate.
 		step: ->
-			@camera.step()
 			@gameObjects.forEach (obj) =>
 				obj.step()
 				if obj.dead()

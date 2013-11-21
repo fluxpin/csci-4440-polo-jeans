@@ -32,6 +32,7 @@ define (require) ->
 				 dx, -dy
 				-dx, -dy
 			]), gl.STATIC_DRAW
+			@layer = 0.0 # Animation layer
 
 			@_frames = @_texture.frames # Animation frames
 			@_delay = 0 # Frame delay for current animation
@@ -48,6 +49,17 @@ define (require) ->
 			@_width
 		height: ->
 			@_height
+
+		###
+		Method: setLayer
+		Set the layer of the animation.
+		Parameters:
+
+		layer - The layer of the animation. Must be between -9 and 9
+		(inclusive), 0 by default. Higher values are closer to the camera.
+		###
+		setLayer: (layer) ->
+			@layer = layer / 10.0
 
 		###
 		Method: do
@@ -91,6 +103,7 @@ define (require) ->
 
 			# Refresh transform matrices
 			graphics.loadMatrices shader
+			gl.uniform1f shader.layer, @layer
 			# Bind geometry to the context
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
 			gl.vertexAttribPointer shader.vertex, 2, gl.FLOAT, false, 0, 0

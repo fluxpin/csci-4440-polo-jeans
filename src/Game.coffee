@@ -58,6 +58,7 @@ define (require) ->
 
 			program.pMatrix = gl.getUniformLocation program, 'p_matrix'
 			program.mvMatrix = gl.getUniformLocation program, 'mv_matrix'
+			program.layer = gl.getUniformLocation program, 'layer'
 
 			program.vertex = gl.getAttribLocation program, 'vertex'
 			gl.enableVertexAttribArray program.vertex

@@ -49,7 +49,7 @@ define (require) ->
 
 		# draws all active objects.
 		draw: ->
-			@camera.draw()
+			@camera.position()
 			@gameObjects.forEach (obj) ->
 				obj.draw()
 
