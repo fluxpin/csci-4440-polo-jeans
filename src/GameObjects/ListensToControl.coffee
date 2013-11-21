@@ -4,6 +4,8 @@ define (require) ->
 	GameObject = require './GameObject'
 	CallsBack = require './CallsBack'
 	Inits = require './Inits'
+	Controller = require './Controller'
+
 	###
 	Trait: ListensToControl
 	TODO TEST, DOC
@@ -32,15 +34,14 @@ define (require) ->
 		Registers me with the Controller.
 		###
 		@onInit ->
-			37
-		#	(the Controller).registerListener @
+			(@the Controller).registerListener @
 
 		###
 		Method: isButtonDown
 		Whether the given button is down.
 		###
 		isButtonDown: (button) ->
-			(the Controller).isDown button
+			(@the Controller).isButtonDown button
 
 		###
 		Method: buttonDown
@@ -75,3 +76,6 @@ define (require) ->
 					expect(@aWorked).toEqual yes
 
 			(new A).test()
+
+
+	ListensToControl

@@ -2,15 +2,25 @@ define (require) ->
 	M = require 'matrix'
 	Graphics = require 'Render/Graphics'
 	Vec2 = require 'Vec2'
+	GameObject = require './GameObject'
+	HasPos = require './HasPos'
 
 	###
 	Class: Camera
 	###
-	class Camera
+	class Camera extends GameObject
+		@does HasPos
+
 		###
 		Method: constructor
 		###
-		constructor: (@_x = 0.0, @_y = 0.0) ->
+		constructor: (x = 0.0, y = 0.0) ->
+			super()
+			@initialize()
+			@warp new Vec2 x, y
+
+		size: ->
+			Graphics.instance().size()
 
 		###
 		Method: step
@@ -34,13 +44,14 @@ define (require) ->
 				-1.0,
 				1.0
 			M.mat4.identity graphics.mvMatrix
-			M.mat4.translate graphics.mvMatrix, graphics.mvMatrix, [-@_x, -@_y, 0.0]
+
+			M.mat4.translate graphics.mvMatrix, graphics.mvMatrix,
+				[-@pos().x(), -@pos().y(), 0.0]
 
 		###
 		Method: lookAt
 		###
 		lookAt: (pos) ->
 			type pos, Vec2
-			@_x = pos.x()
-			@_y = pos.y()
+			@pos().set pos
 

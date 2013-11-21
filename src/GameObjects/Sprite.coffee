@@ -15,13 +15,12 @@ define (require) ->
 		@does HasAnimation, HasPos
 
 		@onInit ->
-			aniName = "#{@constructor.name}.png"
-			[w, h] = @aniSize()
-			@animation = new Animation aniName, w, h
+			[w, h] = @animationSize()
+			@animation = new Animation @animationName(), w, h
 			@animation.do 'idle'
 
-		#constructor: ->
-		#	super()
+		animationName: ->
+			"#{@constructor.name}.png"
 
 		###
 		Method: draw
@@ -31,7 +30,7 @@ define (require) ->
 		draw: ->
 			super()
 			@animation.step()
-			@drawAnimation(@pos(), @rotation())
+			@drawAnimation @pos(), @rotation()
 
 		rotation: ->
 			0

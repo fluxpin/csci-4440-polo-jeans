@@ -20,7 +20,7 @@ define (require) ->
 		Move immediately to the given destination.
 		###
 		warp: (newPos) ->
-			@pos().setTo newPos
+			@pos().set newPos
 
 		###
 		Method: move
@@ -38,10 +38,19 @@ define (require) ->
 			other - A HasPos I might collide with.
 		###
 		collides: (other) ->
+			type other, HasPos
 			@rect().collides other.rect()
+
+		collideSide: (other) ->
+			type other, HasPos
+			@rect().collideSide other.rect()
 
 		rect: ->
 			Rect.centered @pos(), @size()
+
+		moveInside: (rect) ->
+			@pos().moveInside rect.smallerBy @size()
+
 
 		###
 		Method: eachColliding

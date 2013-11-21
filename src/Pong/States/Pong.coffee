@@ -2,6 +2,10 @@ define (require) ->
 	PlayState = (require 'GameState').PlayState
 	Ball = require '../Objects/Ball'
 	Paddle = require '../Objects/Paddle'
+	ImageObject = require '../Objects/ImageObject'
+	PauseToggle = require '../Objects/PauseToggle'
+	ScoreKeeper = require '../Objects/ScoreKeeper'
+	Controller = (require 'GameObject').Controller
 
 	###
 	A state that plays the Pong game.
@@ -9,18 +13,19 @@ define (require) ->
 	###
 	class Pong extends PlayState
 		constructor:  ->
-			super
-
 			@_width = 1024
 			@_height = 512
-			paddleMargin = 32
+			super()
 
-			#@addObject new ImageObject background
-			@addObject new Ball
-			@addObject new Paddle (-@width()/2 + paddleMargin)
-			@addObject new Paddle (@width()/2 - paddleMargin)
-			#need pause control object here
-			#@addObject new ScoreKeeper
+			paddleMargin = 64
+
+			@addObject new ImageObject 'Arena.png', 1024, 1024
+			@addObject new Controller
+			@addObject ball = new Ball
+			@addObject new Paddle (-@width()/2 + paddleMargin), 'wasd'
+			@addObject new Paddle (@width()/2 - paddleMargin), 'arrows'
+			@addObject new PauseToggle
+			@addObject new ScoreKeeper
 
 		width: ->
 			@_width

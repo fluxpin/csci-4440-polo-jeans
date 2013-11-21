@@ -46,13 +46,16 @@ define (require) ->
 			Math[name] @
 
 	extend Number.prototype,
+		average: (oth) ->
+			(@ + oth).half()
+
 		###
 		Method: crop
 		Push this to be within [inclusive] a min and max.
 		###
 		crop: (min, max) ->
-			check min < max, ->
-				"min must be < max, but #{min} >= #{max}"
+			check min <= max, ->
+				"min must be <= max, but #{min} > #{max}"
 			if @ < min
 				min
 			else if @ > max
@@ -76,6 +79,15 @@ define (require) ->
 		###
 		oppositeSign: (oth) ->
 			(@ * oth) < 0
+
+		negative: ->
+			@ < 0
+		positive: ->
+			@ > 0
+		toNegative: ->
+			-@abs()
+		toPositive: ->
+			@abs()
 
 		###
 		Method: scaleFrom

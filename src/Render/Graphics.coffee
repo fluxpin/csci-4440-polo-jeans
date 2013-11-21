@@ -11,11 +11,15 @@ define (require) ->
 		Method: constructor
 		###
 		constructor: (div, width, height) ->
+			@_size = new Vec2 width, height
 			@context = @_glFromDiv div, width, height
 			# Projection and model-view matrices
 			@pMatrix = M.mat4.create()
 			@mvMatrix = M.mat4.create()
 			@_mvMatrixStack = []
+
+		size: ->
+			@_size
 
 		###
 		Method: linkProgram

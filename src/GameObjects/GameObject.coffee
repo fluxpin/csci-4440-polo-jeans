@@ -1,19 +1,26 @@
-define (require) ->
+define ['require', 'GameState'], (require, GameState) ->
 	require 'meta'
+	CallsBack = require './CallsBack'
+	Inits = require './Inits'
+
 	###
 	Class: GameObject
 	Anything that steps and draws.
 	There are many of these per GameState.
 	###
 	class GameObject
-		@does (require './CallsBack'), require './Inits'
+		@does CallsBack, Inits
 
 		@onStep = (stepper) ->
 			@on 'step', stepper
 
 		constructor: ->
+			GameState = require 'GameState'
+			@_gameState = GameState.current
 			@initialize()
 
+		gameState: ->
+			@_gameState
 
 		###
 		Method: step
@@ -35,12 +42,19 @@ define (require) ->
 		Otherwise returns undefined.
 		###
 		the: (type) ->
-			@gameState.uniqueServer.the type
+			@gameState().uniqueServer.the type
 
 		dead: ->
-			false
+			no
+
+		die: ->
+			@dead = -> yes
 
 		each: (type, fun) ->
-			@gameState.gameObjects.forEach (obj) ->
+			@gameState().gameObjects.forEach (obj) ->
 				if obj.isA type
 					fun obj
+
+		emit: (obj) ->
+			@gameState().addObject obj
+			obj

@@ -1,6 +1,6 @@
 define (require) ->
-	extend = (require 'jquery').extend
-	TraitMergingData = (require './TraitMergingData').TraitMergingData
+	{ extend } = require 'jquery'
+	{ TraitMergingData } = require './TraitMergingData'
 
 	###
 	Method: isA
@@ -66,6 +66,7 @@ define (require) ->
 			@prototype
 
 		for trait_ctr in arguments
+			type trait_ctr, Function
 			continue if clazz.isA trait_ctr
 
 			addTrait @, trait_ctr

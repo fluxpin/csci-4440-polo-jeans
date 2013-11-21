@@ -32,11 +32,23 @@ define (require) ->
 			type accelerateBy, Vec2
 			@_vel.add accelerateBy
 
-		bounceX: ->
-			@_vel.setX -@_vel.x()
+		#bounceX: ->
+		#	@_vel.setX -@_vel.x()
 
-		bounceY: ->
-			@_vel.setY -@_vel.y()
+		#bounceY: ->
+		#	@_vel.setY -@_vel.y()
+
+		bounceLeft: ->
+			@vel().setX @vel().x().toNegative()
+		bounceRight: ->
+			@vel().setX @vel().x().toPositive()
+		bounceDown: ->
+			@vel().setY @vel().y().toNegative()
+		bounceUp: ->
+			@vel().setY @vel().y().toPositive()
+
+		stopMoving: ->
+			@_vel.set Vec2.zero()
 
 
 

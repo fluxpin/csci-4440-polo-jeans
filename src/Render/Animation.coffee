@@ -10,6 +10,10 @@ define (require) ->
 		Method: constructor
 		###
 		constructor: (texture, @_width, @_height) ->
+			type texture, String
+			type @_width, Number
+			type @_height, Number
+
 			cache = ResourceCache.instance()
 			graphics = Graphics.instance()
 			gl = graphics.context

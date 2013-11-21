@@ -6,5 +6,5 @@ define (require) ->
 	Game = require 'Game'
 
 	testGame: (div) ->
-		new Game div, 800, 600
+		new Game div, 800, 512
 	Game: Game

@@ -12,12 +12,12 @@
 		}
 	},
 	{
-		"name": "Digits.png",
+		"name": "Counter.png",
 		"type": "animated",
 		"width": 16,
 		"height": 1,
 		"animation": {
-			"0": {
+			"idle": {
 				"delay": 0,
 				"frames": [0]
 			},
@@ -76,6 +76,42 @@
 			"move": {
 				"delay": 0,
 				"frames": [1]
+			}
+		}
+	},
+	{
+		"name": "Arena.png",
+		"type": "animated",
+		"width": 1,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
+			}
+		}
+	},
+	{
+		"name": "WinArrows.png",
+		"type": "animated",
+		"width": 1,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
+			}
+		}
+	},
+	{
+		"name": "WinWASD.png",
+		"type": "animated",
+		"width": 1,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
 			}
 		}
 	}

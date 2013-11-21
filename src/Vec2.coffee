@@ -40,12 +40,17 @@ define (require) ->
 			@_x += oth._x * scale
 			@_y += oth._y * scale
 
-		setTo: (oth) ->
-			@_x = oth._x
-			@_y = oth._y
+		set: (oth) ->
+			@setX oth.x()
+			@setY oth.y()
 
 		copy: ->
 			new Vec @x(), @y()
+
+		moveInside: (rect) ->
+			@setX @x().crop rect.left(), rect.right()
+			@setY @y().crop rect.bottom(), rect.top()
+
 
 		@zero = ->
 			new Vec2 0, 0
@@ -65,6 +70,9 @@ define (require) ->
 		@left = (x) ->
 			x ?= 1
 			@right -x
+
+		toString: ->
+			"<#{@x()}, #{@y()}>"
 
 
 ###

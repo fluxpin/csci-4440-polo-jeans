@@ -1,12 +1,20 @@
 define (require) ->
-	GameObject = require 'GameObject'
+	{ MoveSprite } = require 'GameObject'
+	Vec2 = require 'Vec2'
+	Animation = require 'Render/Animation'
 
-	class ImageObject extends GameObject
-		constructor: (imageName) ->
-			#get my animation
+	class ImageObject extends MoveSprite
+		constructor: (@imageName, @sizeX, @sizeY) ->
+			super()
 
-		step: ->
-			animation.step()
+		animationName: ->
+			@imageName
 
-		draw: ->
-			#draw my animation at (0, 0)
+		animationSize: ->
+			[@sizeX, @sizeY]
+
+		#step: ->
+		#	@animation.step()
+
+		#draw: ->
+		#	@animation.draw()

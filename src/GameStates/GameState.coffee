@@ -1,7 +1,10 @@
 define (require) ->
-	Camera = require 'Render/Camera'
 	GameObject = require 'GameObject'
+	Camera = GameObject.Camera
 	UniqueServer = require 'GameStates/UniqueServer'
+	Vec2 = require 'Vec2'
+	Rect = require 'Rect'
+	require 'Array'
 
 	###
 	Class: GameState
@@ -9,7 +12,9 @@ define (require) ->
 	actions and draw them.
 	###
 	class GameState
-		constructor: (state) ->
+		constructor: ->
+			GameState.current = @
+
 			if arguments.length is 1
 				@game = state.game
 				@gameObjects = state.gameObjects
@@ -19,10 +24,12 @@ define (require) ->
 				@uniqueServer = state.uniqueServer
 				@camera = state.camera
 			else
-				@camera = new Camera
+				@camera = new Camera @width(), @height()
 				@gameObjects = []
 				@uniqueServer = new UniqueServer
 
+		rect: ->
+			Rect.centered Vec2.zero(), new Vec2 @width(), @height()
 
 		###
 		Method: addobject
@@ -31,13 +38,12 @@ define (require) ->
 		addObject: (obj) ->
 			type obj, GameObject
 			@gameObjects.push obj
-			obj.gameState = @
+			@uniqueServer.add obj
 
 		removeObject: (obj) ->
 			type obj, GameObject
-			pos = @gameObjects.indexOf obj
-			if pos >= 0
-				@gameObjects.splice(pos, 1)
+			@uniqueServer.remove obj
+			@gameObjects.remove obj
 
 		step: ->
 
@@ -48,7 +54,5 @@ define (require) ->
 				obj.draw()
 
 		changeState: ->
-
-
 
 
