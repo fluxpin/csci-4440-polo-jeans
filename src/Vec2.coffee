@@ -20,6 +20,9 @@ define (require) ->
 			check not isNaN y
 			@_y = y
 
+		magnitude: ->
+			(@x().square() + @y().square()).squareRoot()
+
 		positive: ->
 			@x() > 0 and @y() > 0
 

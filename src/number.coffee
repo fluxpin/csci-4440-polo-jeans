@@ -115,6 +115,9 @@ define (require) ->
 		square: ->
 			@ * @
 
+		squareRoot: ->
+			Math.sqrt @
+
 		###
 		Method: toIntString
 		Number rounded to an int and stringified.

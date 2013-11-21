@@ -25,12 +25,18 @@ define (require) ->
 
 			@accelerate new Vec2 x, y
 
-			@timeSinceBounce = 10
+			@timeSinceBounce = @maxTimeSinceBounce()
 
 		animationSize: -> [64, 64]
 
+		maxTimeSinceBounce: ->
+			20
+
 		speedUp: ->
-			@vel().scale 1.1
+			if @vel().magnitude() < 20
+				@vel().scale 1.1
+			else
+				console.log 'too fast'
 
 		step: ->
 			super()
@@ -54,7 +60,7 @@ define (require) ->
 							@bounceDown()
 
 					@speedUp()
-					@timeSinceBounce = 10
+					@timeSinceBounce = @maxTimeSinceBounce()
 
 					p.bouncedOffOf()
 
