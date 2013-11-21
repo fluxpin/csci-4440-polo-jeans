@@ -45,6 +45,9 @@ define (require) ->
 			else if @rect().bottom() < gsr.bottom()
 				@bounceUp()
 
+			@gameState().camera.lookAt @pos()
+			@gameState().camera.moveInside gsr
+			
 			if @rect().left() < gsr.left()
 				(@the ScoreKeeper).scoreRight()
 				@bounceRight()
@@ -52,8 +55,6 @@ define (require) ->
 				(@the ScoreKeeper).scoreLeft()
 				@bounceLeft()
 
-			@gameState().camera.lookAt @pos()
-			@gameState().camera.moveInside gsr
 
 		rotation: ->
 			@angle
