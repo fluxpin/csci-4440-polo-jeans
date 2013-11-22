@@ -11,7 +11,7 @@ define (require) ->
 	class Start extends GameState
 		constructor: ->
 			super 1024, 512
-			@addObject new ImageObject 'Start.png', 512, 512
+			@addObject new ImageObject 'Start.png', 0, 512, 512
 			@addObject new Controller
 			@addObject new PauseToggle
 			@camera.lookAt Vec2.zero()

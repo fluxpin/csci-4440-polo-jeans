@@ -18,7 +18,7 @@ define (require) ->
 						'WinWASD.png'
 					when 'arrows'
 						'WinArrows.png'
-			@addObject new ImageObject imgName, 512, 512
+			@addObject new ImageObject imgName, 0, 512, 512
 			@addObject new Controller
 			@addObject new SoundPlayer 'win.ogg'
 			@camera.lookAt Vec2.zero()

@@ -8,7 +8,8 @@ define (require) ->
 	class Pause extends PausedState
 		constructor:  (state) ->
 			super 1024, 512, state
-			@pauseImage = @addObject new ImageObject 'Pause.png', 512, 512
+			@pauseImage =
+				@addObject new ImageObject 'Pause.png', 3, 512, 512
 
 		changeState: ->
 			Pong = require './Pong'

@@ -13,12 +13,13 @@ define (require) ->
 
 		Parameters:
 			imageName - Name of image (include extension)
-			sizeX - width of image
-			sizeY - height of image
+			layer - Layer to display image.
+			sizeX - Width of image.
+			sizeY - Height of image.
 		###
-		constructor: (@imageName, @sizeX, @sizeY) ->
+		constructor: (@imageName, layer, @sizeX, @sizeY) ->
 			super()
-			@setLayer 3
+			@setLayer layer
 
 		animationName: ->
 			@imageName

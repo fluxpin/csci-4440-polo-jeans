@@ -18,7 +18,7 @@ define (require) ->
 			super 1024, 512, state
 			unless state instanceof GameState
 				paddleMargin = 64
-				@addObject new ImageObject 'Arena.png', 1024, 1024
+				@addObject new ImageObject 'Arena.png', -3, 1024, 1024
 				@addObject new Controller
 				@addObject ball = new Ball
 				@addObject new Paddle yes, 'wasd'
