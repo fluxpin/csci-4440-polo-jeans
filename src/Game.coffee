@@ -5,7 +5,8 @@ define (require) ->
 	TextureLoader = require 'Loader/TextureLoader'
 
 	requestAnimationFrame =
-		window.requestAnimationFrame ? window.mozRequestAnimationFrame
+		window.requestAnimationFrame ?
+		window.mozRequestAnimationFrame
 
 	check requestAnimationFrame?, ->
 		"Can't get 'requestAnimationFrame'"
@@ -17,9 +18,9 @@ define (require) ->
 		###
 		Method: constructor
 		Paremeters:
-			div - A <div> element of size width x height.
-			width - width of the game area.
-			height -  height of the game area.
+		div - A <div> element to hold the game.
+		width - The width of the game.
+		height - The height of the game.
 		###
 		constructor: (div, width, height) ->
 			Graphics.instance div, width, height

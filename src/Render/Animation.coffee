@@ -4,10 +4,16 @@ define (require) ->
 
 	###
 	Class: Animation
+	Render a static or animated texture as a sprite. Track and current
+	animation and the state of said animation.
 	###
 	class Animation
 		###
 		Method: constructor
+		Parameters:
+		texture - The name of a texture.
+		width - The width of the animation in WebGL units.
+		height - The height of the animation in WebGL units.
 		###
 		constructor: (texture, @_width, @_height) ->
 			type texture, String
@@ -32,7 +38,7 @@ define (require) ->
 				 dx, -dy
 				-dx, -dy
 			]), gl.STATIC_DRAW
-			@layer = 0.0 # Animation layer
+			@_layer = 0.0 # Animation layer
 
 			@_frames = @_texture.frames # Animation frames
 			@_delay = 0 # Frame delay for current animation
@@ -54,15 +60,17 @@ define (require) ->
 		Method: setLayer
 		Set the layer of the animation.
 		Parameters:
-
 		layer - The layer of the animation. Must be between -9 and 9
 		(inclusive), 0 by default. Higher values are closer to the camera.
 		###
 		setLayer: (layer) ->
-			@layer = layer / 10.0
+			@_layer = layer / 10.0
 
 		###
 		Method: do
+		Switch animations within a fixed texture.
+		Parameters:
+		animation - The name of an animation in the loaded texture.
 		###
 		do: (animation) ->
 			graphics = Graphics.instance()
@@ -103,7 +111,7 @@ define (require) ->
 
 			# Refresh transform matrices
 			graphics.loadMatrices shader
-			gl.uniform1f shader.layer, @layer
+			gl.uniform1f shader.layer, @_layer
 			# Bind geometry to the context
 			gl.bindBuffer gl.ARRAY_BUFFER, @_sprite
 			gl.vertexAttribPointer shader.vertex, 2, gl.FLOAT, false, 0, 0

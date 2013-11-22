@@ -5,24 +5,64 @@ define (require) ->
 
 	###
 	Class: Graphics
+	Manage the WebGL context and global rendering state, and provide useful
+	methods for rendering.
 	###
 	class Graphics extends Singleton
 		###
 		Method: constructor
+		Parameters:
+		div - A <div> element to hold the game.
+		width - The width of the game in pixels.
+		height - The height of the game in pixels.
 		###
 		constructor: (div, width, height) ->
-			@_size = new Vec2 width, height
+			# WebGL context
 			@context = @_glFromDiv div, width, height
 			# Projection and model-view matrices
 			@pMatrix = M.mat4.create()
 			@mvMatrix = M.mat4.create()
 			@_mvMatrixStack = []
+			# Game size
+			@_size = new Vec2 width, height
+
+		###
+		Method: pushMatrix
+		Store the current model-view matrix before drawing.
+		###
+		pushMatrix: ->
+			copy = M.mat4.clone @mvMatrix
+			@_mvMatrixStack.push copy
+
+		###
+		Method: popMatrix
+		Restore the previous model-view matrix after drawing.
+		###
+		popMatrix: ->
+			if @_mvMatrixStack.length == 0
+				fail 'Invalid popMatrix'
+			@mvMatrix = @_mvMatrixStack.pop()
+
+		###
+		Method: loadMatrices
+		Load the current transform matrices for rendering.
+		Parameters:
+		program - A shader program to be used for rendering.
+		###
+		loadMatrices: (program) ->
+			gl = @context
+			gl.uniformMatrix4fv program.pMatrix, false, @pMatrix
+			gl.uniformMatrix4fv program.mvMatrix, false, @mvMatrix
 
 		size: ->
 			@_size
 
 		###
 		Method: linkProgram
+		Link a vertex and fragment shader to form a shader program.
+		Parameters:
+		vertex - A vertex shader.
+		fragment - A fragment shader.
 		###
 		linkProgram: (vertex, fragment) ->
 			gl = @context
@@ -34,21 +74,6 @@ define (require) ->
 			unless gl.getProgramParameter program, gl.LINK_STATUS
 				fail gl.getProgramInfoLog program
 			program
-
-		###
-		Method: pushMatrix
-		###
-		pushMatrix: ->
-			copy = M.mat4.clone @mvMatrix
-			@_mvMatrixStack.push copy
-
-		###
-		Method: popMatrix
-		###
-		popMatrix: ->
-			if @_mvMatrixStack.length == 0
-				fail 'Invalid popMatrix'
-			@mvMatrix = @_mvMatrixStack.pop()
 
 		###
 		Method: drawAt
@@ -74,15 +99,6 @@ define (require) ->
 			inMatrix()
 			@popMatrix()
 
-		###
-		Method: loadMatrices
-		###
-		loadMatrices: (shader) ->
-			gl = @context
-
-			gl.uniformMatrix4fv shader.pMatrix, false, @pMatrix
-			gl.uniformMatrix4fv shader.mvMatrix, false, @mvMatrix
-
 		# Create WebGL context
 		_glFromDiv: (div, width, height) ->
 			canvas = document.createElement 'canvas'
@@ -98,7 +114,7 @@ define (require) ->
 			gl.blendFunc gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
 			gl.enable gl.BLEND
 			# Enable depth
-			#gl.enable gl.DEPTH_TEST
+			gl.enable gl.DEPTH_TEST
 			# Clear screen to black
 			gl.clearColor 0.0, 0.0, 0.0, 1.0
 			# Texture coordinates increase up the Y axis, whereas image
