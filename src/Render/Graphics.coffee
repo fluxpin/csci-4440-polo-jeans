@@ -54,6 +54,10 @@ define (require) ->
 			gl.uniformMatrix4fv program.pMatrix, false, @pMatrix
 			gl.uniformMatrix4fv program.mvMatrix, false, @mvMatrix
 
+		###
+		Method: size
+		Size of the drawing area (in pixels).
+		###
 		size: ->
 			@_size
 
@@ -77,6 +81,9 @@ define (require) ->
 
 		###
 		Method: drawAt
+		Parameters:
+			vec - Location to draw.
+			draw - Drawing function to do at that location.
 		###
 		drawAt: (vec, draw) ->
 			type vec, Vec2
@@ -86,6 +93,12 @@ define (require) ->
 				M.mat4.translate @mvMatrix, @mvMatrix, [vec.x(), vec.y(), 0.0]
 				draw()
 
+		###
+		Method: rotate
+		Parameters:
+			angle - Angle to draw at.
+			draw - Drawing function to do at that angle.
+		###
 		rotate: (angle, draw) ->
 			type angle, Number
 			type draw, Function
