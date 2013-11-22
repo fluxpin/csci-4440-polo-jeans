@@ -26,10 +26,6 @@ define (require) ->
 				#bug - changeState called twice on enter if re-added here.
 				#@addObject new PauseToggle
 				@addObject new ScoreKeeper
-		width: ->
-			@_width
-		height: ->
-			@_height
 
 		#go to win state
 		win: (whoWon) ->

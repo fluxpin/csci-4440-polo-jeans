@@ -11,14 +11,27 @@ define ['require', 'GameState'], (require, GameState) ->
 	class GameObject
 		@does CallsBack, Inits
 
+		###
+		Class Method: onStep
+		Adds a new thing to do every step.
+		###
 		@onStep = (stepper) ->
 			@on 'step', stepper
 
+		###
+		Constructor: GameObject
+		Sets this object's GameState to GameState.current.
+		Calls all initializers.
+		###
 		constructor: ->
 			GameState = require 'GameState'
 			@_gameState = GameState.current
 			@initialize()
 
+		###
+		Method: gameState
+		Returns this object's gameState.
+		###
 		gameState: ->
 			@_gameState = GameState.current
 
@@ -44,17 +57,34 @@ define ['require', 'GameState'], (require, GameState) ->
 		the: (type) ->
 			@gameState().uniqueServer.the type
 
+		###
+		Method: dead
+		Whether the GameObject should be removed from its GameState.
+		###
 		dead: ->
 			no
 
+		###
+		Method: die
+		Become dead.
+		###
 		die: ->
 			@dead = -> yes
 
-		each: (type, fun) ->
-			@gameState().gameObjects.forEach (obj) ->
-				if obj.isA type
+		###
+		Method: each
+		Calls the function on every other GameObject of the given type.
+		###
+		each: (objType, fun) ->
+			type objType, Function
+			@gameState().gameObjects.forEach (obj) =>
+				if (obj.isA objType) and obj isnt @
 					fun obj
 
+		###
+		Method: emit
+		Send my object into my GameState.
+		###
 		emit: (obj) ->
 			@gameState().addObject obj
 			obj

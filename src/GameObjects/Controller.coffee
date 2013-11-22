@@ -87,25 +87,24 @@ define (require) ->
 		keyCodeToName[keyNameToCode[key]] = key
 
 	###
-	class: Controller
-	Recieves input from keyboard and provides info on
-	what keys are currently pressed
+	Class: Controller
+	Listens to Keyboard and notifies registered listeners.
+	Is Unique.
 	###
 	class Controller extends GameObject
 		@unique()
+
 		###
-		Method: contructor
-		Initializes listeners for keydown and keyup events
-		Creates dictionary to convert key names to keyCodes
+		Constructor: Controller
 		###
 		constructor: ->
 			@currentlyPressedKeys = {}
 			@listeners = []
-			document.addEventListener 'keydown', (event) => @keyDown event
-			document.addEventListener 'keyup', (event) => @keyUp event
+			document.addEventListener 'keydown', (event) => @_keyDown event
+			document.addEventListener 'keyup', (event) => @_keyUp event
 
-		#register key as down
-		keyDown: (event) ->
+
+		_keyDown: (event) ->
 			#Disable arrow key scrolling
 			switch event.keyCode
 				when 32, 37, 38, 39, 40
@@ -114,15 +113,19 @@ define (require) ->
 			@listeners.forEach (listener) =>
 				listener.onButtonDown keyCodeToName[event.keyCode]
 
-		#register key as up (not pressed)
-		keyUp: (event) ->
+		_keyUp: (event) ->
 			@currentlyPressedKeys[event.keyCode] = no
 			@listeners.forEach (listener) =>
 				listener.onButtonUp keyCodeToName[event.keyCode]
 
-		#return if key with name keyName is currently pressed
+		###
+		Whether the button of the given name is down.
+		###
 		isButtonDown: (keyName) ->
 			@currentlyPressedKeys[keyNameToCode[keyName]]
 
+		###
+		Add a new ListensToControl.
+		###
 		registerListener: (obj) ->
 			@listeners.push obj

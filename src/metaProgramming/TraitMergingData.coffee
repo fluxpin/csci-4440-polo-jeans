@@ -50,7 +50,6 @@ define (require) ->
 
 	###
 	Abstract Class: TraitMergingAbstractMap
-	DESCRIBE ME
 	###
 	class TraitMergingAbstractMap extends TraitMergingData
 		constructor: ->

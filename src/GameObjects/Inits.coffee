@@ -1,13 +1,19 @@
 define (require) ->
-	extend = (require 'jquery').extend
+	{ extend } = require 'jquery'
 	require 'meta'
+	CallsBack = require './CallsBack'
+
 	###
 	Trait: Inits
 	Provides @onInit
 	###
 	class Inits
-		@does require './CallsBack'
+		@does CallsBack
 
+		###
+		Method: initialize
+		Call every @onInit handler.
+		###
 		initialize: ->
 			@callBack @_on_init
 

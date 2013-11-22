@@ -13,28 +13,78 @@ define (require) ->
 			when 'down'
 				'up'
 
+	###
+	Class: Rect
+	An axis-aligned rectangle.
+	Immutable.
+	###
 	class Rect
 		constructor: (@_left, @_bottom, @_right, @_top) ->
 			check @left() <= @right()
 			check @bottom() <= @top()
+			Object.freeze @
 
+		###
+		Method: left
+		Leftmost x.
+		###
 		left: -> @_left
+
+		###
+		Method: right
+		Rightmost x.
+		###
 		right: -> @_right
+
+		###
+		Method: bottom
+		Lowest y.
+		###
 		bottom: -> @_bottom
+
+		###
+		Method: top
+		Highest y.
+		###
 		top: -> @_top
 
+		###
+		Method: centerX
+		###
 		centerX: ->
 			@left().average @right()
+
+		###
+		Method: centerY
+		###
 		centerY: ->
 			@bottom().average @top()
+
+		###
+		Method: center
+		###
 		center: ->
 			new Vec2 @centerX(), @centerY()
 
+		###
+		Method: width
+		Distance from left to right side.
+		###
 		width: ->
 			@right() - @left()
+
+		###
+		Method: height
+		Distance from bottom to top.
+		###
 		height: ->
 			@top() - @bottom()
 
+		###
+		Method: collides
+		Whether I and another rect have any intersection.
+		collideSide finds how we collided.
+		###
 		collides: (oth) ->
 			type oth, Rect
 
@@ -45,24 +95,23 @@ define (require) ->
 
 			collidesX() and collidesY()
 
-		@centered = (center, size) ->
-			type center, Vec2
-			type size, Vec2
-			check size.positive(), ->
-				"Size must be positive"
-
-			cx = center.x()
-			cy = center.y()
-			w = size.x().half()
-			h = size.y().half()
-			new Rect cx - w, cy - h, cx + w, cy + h
-
+		###
+		Method: smallerBy
+		Myself, reduced in size by dec.
+		I must be larger than dec.
+		###
 		smallerBy: (dec) ->
 			type dec, Vec2
 			w = dec.x().half()
 			h = dec.y().half()
 			new Rect @left() + w, @bottom() + h, @right() - w, @top() - h
 
+		###
+		Method: collideSide
+		What side another rect is relative to me.
+		Assumes we are colliding (doesn't check).
+		Returns one of: 'left', 'right', 'bottom', 'top'.
+		###
 		collideSide: (r) ->
 			type r, Rect
 			# what sides of r are inside me?
@@ -135,6 +184,10 @@ define (require) ->
 						else
 							oppositeSide @vecSide r.center()
 
+		###
+		Method: vecSide
+		What side a Vec2 is relative to me.
+		###
 		vecSide: (v) ->
 			relX = (v.x() - @center().x()) * @height()
 			relY = (v.y() - @center().y()) * @height()
@@ -149,6 +202,22 @@ define (require) ->
 					'bottom'
 				else
 					'top'
+
+		###
+		Class Method: centered
+		Rect centered at center and of size size.
+		###
+		@centered = (center, size) ->
+			type center, Vec2
+			type size, Vec2
+			check size.positive(), ->
+				"Size must be positive"
+
+			cx = center.x()
+			cy = center.y()
+			w = size.x().half()
+			h = size.y().half()
+			new Rect cx - w, cy - h, cx + w, cy + h
 
 	describe 'Rect', ->
 		it 'collides', ->

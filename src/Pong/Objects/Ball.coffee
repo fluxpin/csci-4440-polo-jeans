@@ -4,19 +4,26 @@ define (require) ->
 	Paddle = require './Paddle'
 	ScoreKeeper = require './ScoreKeeper'
 
+	###
+	Class: Ball
+	Pong ball.
+	###
 	class Ball extends MoveSprite
-
 		constructor: ->
 			super()
 			@reset()
 
+		###
+		Method: reset
+		Puts me in the center, at a random low velocity.
+		###
 		reset: ->
 			@angle = 0.0
 			@warp Vec2.zero()
 			@stopMoving()
 
-			x = 3 + Math.random() * 3
-			y = 3 + Math.random() * 3
+			x = Number.randomFrom 3, 6
+			y = Number.randomFrom 3, 6
 
 			if Math.random() < 0.5
 				x *= -1
@@ -29,15 +36,35 @@ define (require) ->
 
 		animationSize: -> [64, 64]
 
+		###
+		Method: maxTimeSinceBounce
+		Doesn't bounce more than once every this many frames.
+		###
 		maxTimeSinceBounce: ->
 			20
 
-		speedUp: ->
-			if @vel().magnitude() < 20
-				@vel().scale 1.1
-			else
-				console.log 'too fast'
+		###
+		Method: maxSpeed
+		Stops speeding up after this speed.
+		###
+		maxSpeed: ->
+			20
 
+		###
+		Method: speedUp
+		Increases speed.
+		###
+		speedUp: ->
+			if @vel().magnitude() < @maxSpeed()
+				@vel().scale 1.1
+
+		###
+		Method: step
+		Rotates.
+		Checks for collision with Paddles.
+		Checks for collision with bounds.
+		If collides with left or right side, tells the ScoreKeeper.
+		###
 		step: ->
 			super()
 			@angle += 0.05 # 0.05 rads ~ 3 degs ~ 180 degs/s
@@ -80,7 +107,6 @@ define (require) ->
 			else if @rect().right() > gsr.right()
 				(@the ScoreKeeper).scoreLeft()
 				@reset()
-
 
 		rotation: ->
 			@angle

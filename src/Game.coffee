@@ -92,9 +92,9 @@ define (require) ->
 			@_state = @_states[name]
 			@_state.game = @
 			@_state.reclaimCurrent()
-			
+
 		createState: (name, state) ->
 			@_states[name] = state
-			
+
 		containsState:(name) ->
 			@_states.hasOwnProperty(name)

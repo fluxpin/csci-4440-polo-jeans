@@ -6,7 +6,7 @@ define (require) ->
 	require 'jasmine'
 	require 'jasmine-html'
 	require 'polo-jeans'
-	require 'GameObject'
+	require 'GameState'
 
 	return ->
 		jasmineEnv =

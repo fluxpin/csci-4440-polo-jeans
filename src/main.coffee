@@ -27,7 +27,6 @@ err = (error) ->
 TEST = no
 
 if TEST
-	require ['./test'], (test) ->
-		test()
+	require ['./test'], ((test) -> test()), err
 else
 	require ['polo-jeans',  './Pong/index'], use, err

@@ -3,17 +3,28 @@ define (require) ->
 	Vec2 = require 'Vec2'
 	Rect = require 'Rect'
 
+	###
+	Class: Paddle
+	Controlled by a player, who tries to bounce the ball away from their side.
+	###
 	class Paddle extends MoveSprite
 		@does ListensToControl, HasSounds
 
+		###
+		Constructor: Paddle
+
+		Parameters:
+			isLeft - Whether this is the left player.
+			controlType - 'wasd' or 'arrows'
+		###
 		constructor: (isLeft, controlType) ->
 			super()
 			type isLeft, Boolean
 
-			@boundRect = @makeBoundRect isLeft
+			@boundRect = @_makeBoundRect isLeft
 			@warp @boundRect.center()
 
-			@controls =
+			@_controls =
 				switch controlType
 					when 'wasd'
 						left: 'a'
@@ -30,7 +41,9 @@ define (require) ->
 
 			@addSound 'bounce', "res/sounds/bounce-#{controlType}.wav"
 
-		makeBoundRect: (isLeft) ->
+		animationSize: -> [48, 256]
+
+		_makeBoundRect: (isLeft) ->
 			marginX = 128
 			marginY = 32
 			top = @gameState().height()/2 - marginY
@@ -46,30 +59,31 @@ define (require) ->
 
 			new Rect left, bottom, right, top
 
-		speed: ->
+		_speed: ->
 			6
 
-		animationSize: -> [48, 256]
-
+		###
+		Method: bouncedOffOf
+		Called by Ball upon bounce.
+		###
 		bouncedOffOf: ->
 			@playSound 'bounce'
-
 
 		step: ->
 			super()
 
 			@stopMoving()
-			@animation.do 'idle'
+			@ani 'idle'
 			accs = [
-				[@controls.left, Vec2.left @speed()],
-				[@controls.right, Vec2.right @speed()],
-				[@controls.down, Vec2.down @speed()],
-				[@controls.up, Vec2.up @speed()]
+				[@_controls.left, Vec2.left @_speed()],
+				[@_controls.right, Vec2.right @_speed()],
+				[@_controls.down, Vec2.down @_speed()],
+				[@_controls.up, Vec2.up @_speed()]
 			]
 			accs.forEach (pair) =>
 				[key, vec] = pair
 				if @isButtonDown key
-					@animation.do 'move'
+					@ani 'move'
 					@accelerate vec
 
 			@moveInside @boundRect

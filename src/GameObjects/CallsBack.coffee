@@ -48,7 +48,6 @@ define (require) ->
 					@_callBackArray callBacks, a, b, c, d, e
 
 
-	###
 	describe 'CallsBack', ->
 		it 'lists', ->
 			class A
@@ -56,11 +55,12 @@ define (require) ->
 
 				@on 'a', ->
 					@aWorked = yes
+
 				@on 'a', (x) ->
 					@aWorked2 = x
 
 				test: ->
-					@callBack @onA, 42
+					@callBack @_on_a, 42
 					expect(@aWorked).toEqual yes
 					expect(@aWorked2).toEqual 42
 
@@ -87,4 +87,6 @@ define (require) ->
 					@callBackMap @nope, 'key'
 
 			(new A).test()
-	###
+
+
+	CallsBack

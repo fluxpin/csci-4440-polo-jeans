@@ -3,6 +3,7 @@ define (require) ->
 	GameObject = require './GameObject'
 	Inits = require './Inits'
 	HasPos = require './HasPos'
+
 	###
 	Trait: Moves
 	Provides funcs for any Body with a @vel.
@@ -11,18 +12,26 @@ define (require) ->
 	class Moves extends GameObject
 		@does Inits, HasPos
 
+		###
+		Event: init
+		Sets vel to 0.
+		###
 		@onInit ->
 			@_vel = Vec2.zero()
 
+		###
+		Method: vel
+		Velocity.
+		###
 		vel: ->
 			@_vel
 
 		###
-		?
-		At every step, I advance by my velocity.
+		Event: step
+		Move by vel.
 		###
 		@onStep ->
-			@move @_vel
+			@move @vel()
 
 		###
 		Method: accelerate
@@ -30,31 +39,48 @@ define (require) ->
 		###
 		accelerate: (accelerateBy) ->
 			type accelerateBy, Vec2
-			@_vel.add accelerateBy
+			@vel().add accelerateBy
 
-		#bounceX: ->
-		#	@_vel.setX -@_vel.x()
-
-		#bounceY: ->
-		#	@_vel.setY -@_vel.y()
-
+		###
+		Method: bounceLeft
+		Reflect rightward motion left.
+		###
 		bounceLeft: ->
 			@vel().setX @vel().x().toNegative()
+
+		###
+		Method: bounceRight
+		Reflect leftward motion right.
+		###
 		bounceRight: ->
 			@vel().setX @vel().x().toPositive()
+
+		###
+		Method: bounceDown
+		Reflect upward motion down.
+		###
 		bounceDown: ->
 			@vel().setY @vel().y().toNegative()
+
+		###
+		Method: bounceUp
+		Reflect downard motion up.
+		###
 		bounceUp: ->
 			@vel().setY @vel().y().toPositive()
 
+		###
+		Method: stopMoving
+		Zeros vel.
+		###
 		stopMoving: ->
-			@_vel.set Vec2.zero()
+			@vel().set Vec2.zero()
 
 
 
 	describe 'Moves', ->
 		it 'moves', ->
-			class X extends require './GameObject'
+			class X extends GameObject
 				@does Moves
 
 				constructor: ->

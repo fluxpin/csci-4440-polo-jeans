@@ -2,6 +2,7 @@ define (require) ->
 	extend = (require 'jquery').extend
 	Inits = require './Inits'
 	GameObject = require './GameObject'
+
 	###
 	Trait: HasState
 	A class that has a single state.
@@ -11,6 +12,15 @@ define (require) ->
 	class HasState
 		@does Inits
 
+		###
+		Prop: state
+		The current state.
+		###
+
+		###
+		Event: init
+		Sets state to 'idle'
+		###
 		@onInit ->
 			@be 'idle'
 
@@ -29,12 +39,6 @@ define (require) ->
 				###
 				onEnd: (state, func) ->
 					@onKey 'end', state, func
-
-
-		###
-		Prop: state
-		The current state.
-		###
 
 		###
 		Method: be
@@ -80,3 +84,5 @@ define (require) ->
 
 		it 'works', ->
 			(new SampleHasState).test()
+
+	HasState

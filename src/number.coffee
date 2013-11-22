@@ -46,7 +46,12 @@ define (require) ->
 			Math[name] @
 
 	extend Number.prototype,
+		###
+		Method: average
+		Mid-point between me and another Number.
+		###
 		average: (oth) ->
+			type oth, Number
 			(@ + oth).half()
 
 		###
@@ -70,6 +75,10 @@ define (require) ->
 		diff: (x) ->
 			(@ - x).abs()
 
+		###
+		Method: half
+		1/2 of me.
+		###
 		half: ->
 			@ / 2
 
@@ -80,12 +89,29 @@ define (require) ->
 		oppositeSign: (oth) ->
 			(@ * oth) < 0
 
+		###
+		Method: negative
+		###
 		negative: ->
 			@ < 0
+
+		###
+		Method: positive
+		###
 		positive: ->
 			@ > 0
+
+		###
+		Method: toNegative
+		If I am negative, does nothing. Else, negates me.
+		###
 		toNegative: ->
 			-@abs()
+
+		###
+		Method: toPositive
+		If I am positive, does nothing. Else, negates me.
+		###
 		toPositive: ->
 			@abs()
 
@@ -110,17 +136,21 @@ define (require) ->
 
 		###
 		Method: square
-		Product of a number and itself.
+		Product of me and myself.
 		###
 		square: ->
 			@ * @
 
+		###
+		Method: squareRoot
+		Number whose square is me.
+		###
 		squareRoot: ->
 			Math.sqrt @
 
 		###
 		Method: toIntString
-		Number rounded to an int and stringified.
+		Rounded me to an int and stringified.
 		###
 		toIntString: ->
 			@toFixed()

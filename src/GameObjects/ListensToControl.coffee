@@ -8,7 +8,6 @@ define (require) ->
 
 	###
 	Trait: ListensToControl
-	TODO TEST, DOC
 	###
 	class ListensToControl
 		@does CallsBack, Inits
@@ -60,22 +59,3 @@ define (require) ->
 		###
 		onButtonUp: (button) ->
 			@callBackMap @_on_release, button
-
-
-
-	describe 'ListensToControl', ->
-		it 'works', ->
-			class A extends GameObject
-				@does ListensToControl
-
-				@onPress 'A', ->
-					@aWorked = yes
-
-				test: ->
-					@onButtonDown 'A'
-					expect(@aWorked).toEqual yes
-
-			(new A).test()
-
-
-	ListensToControl

@@ -24,11 +24,6 @@ define (require) ->
 			@camera.lookAt Vec2.zero()
 			@camera.moveInside @rect()
 
-		width: ->
-			@_width
-		height: ->
-			@_height
-
 		changeState: ->
 			Pong = require './Pong'
 			@game.createState 'play', new Pong

@@ -2,16 +2,25 @@ define (require) ->
 	Vec2 = require 'Vec2'
 	Inits = require './Inits'
 	Rect = require 'Rect'
+
 	###
 	Trait: HasPos
-	Provides funcs for anything with a @pos
+	Provides @pos() and related methods.
 	###
 	class HasPos
 		@does Inits
 
+		###
+		Event: init
+		Sets position to 0.
+		###
 		@onInit ->
 			@_pos = Vec2.zero()
 
+		###
+		Method: pos
+		My position.
+		###
 		pos: ->
 			@_pos
 
@@ -41,16 +50,29 @@ define (require) ->
 			type other, HasPos
 			@rect().collides other.rect()
 
+		###
+		Method: collideSide
+		What side of me other is on. ('left', 'right', 'bottom', 'top')
+		###
 		collideSide: (other) ->
 			type other, HasPos
 			@rect().collideSide other.rect()
 
+		###
+		Method: rect
+		A Rect around pos.
+		Requires a method size.
+		###
 		rect: ->
 			Rect.centered @pos(), @size()
 
+		###
+		Method: moveInside
+		Move me so that I am inside of rect.
+		(Must be smaller than it.)
+		###
 		moveInside: (rect) ->
 			@pos().moveInside rect.smallerBy @size()
-
 
 		###
 		Method: eachColliding
@@ -60,6 +82,3 @@ define (require) ->
 			@each type, (obj) =>
 				if @collides obj
 					fun obj
-
-
-		null

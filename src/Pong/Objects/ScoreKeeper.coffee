@@ -1,49 +1,38 @@
 define (require) ->
 	GameObject = require 'GameObject'
-	{ Sprite, HasSounds } = GameObject
-	Vec2 = require 'Vec2'
+	Counter = require './Counter'
 
-	winScore = 10
-
-	class Counter extends Sprite
-		@does HasSounds
-
-		constructor: (x, @name) ->
-			super()
-			@animation.setLayer 5
-			@count = 0
-			y = @gameState().height()/2 - @animationSize()[1]/2
-			@warp new Vec2 x, y
-
-			@addSound 'score', "res/sounds/score-#{@name}.ogg"
-
-		animationSize: -> [64, 64]
-
-		increase: ->
-			@count += 1
-			@playSound 'score'
-			if @count >= winScore
-				yes
-			else
-				@animation.do @count.toString()
-				no
-
+	###
+	Class: ScoreKeeper
+	Tracks the score. Updates the Counters.
+	Is Unique.
+	###
 	class ScoreKeeper extends GameObject
 		@unique()
 
+		###
+		Constructor: ScoreKeeper
+		###
 		constructor: ->
 			super()
 
 			@left = @emit new Counter -100, 'wasd'
 			@right = @emit new Counter 100, 'arrows'
 
+		###
+		Method: ScoreLeft
+		One more point for the left player.
+		###
 		scoreLeft: ->
 			@_score @left
 
+		###
+		Method: ScoreRight
+		One more point for the right player.
+		###
 		scoreRight: ->
 			@_score @right
 
 		_score: (counter) ->
 			type counter, Counter
-			if counter.increase()
-				@gameState().win counter.name
+			counter.increase()

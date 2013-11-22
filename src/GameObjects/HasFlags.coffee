@@ -4,12 +4,18 @@ define (require) ->
 	CallsBack = require './CallsBack'
 	Inits = require './Inits'
 	GameObject = require './GameObject'
+
 	###
 	Trait: HasFlags
 	Allows an object to raise and lower condition-signifying strings.
 	###
 	class HasFlags
 		@does CallsBack, Inits
+
+		###
+		Prop: flags
+		An object whose keys are the raised flags.
+		###
 
 		@onInit ->
 			@flags = {}
@@ -29,11 +35,6 @@ define (require) ->
 				###
 				onLower: (flag, func) ->
 					@onKey 'lower', flag, func
-
-		###
-		Prop: flags
-		An object whose keys are the raised flags.
-		###
 
 		###
 		Method: raise
@@ -68,8 +69,6 @@ define (require) ->
 		###
 		amAny: (flags) ->
 			flags.some @am
-
-
 
 	describe 'flags', ->
 		it 'works', ->
@@ -129,3 +128,5 @@ define (require) ->
 					expect(@aWorked).toEqual yes
 
 			(new Sub).test()
+
+	HasFlags
