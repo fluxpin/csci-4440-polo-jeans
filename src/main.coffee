@@ -11,14 +11,14 @@ requirejs.config
 		Vec2: './Vec2'
 		Rect: './Rect'
 
-use = (polo_jeans, pong) ->
+use = (polo_jeans, pong, test) ->
 	div =
 		document.getElementById 'test-game'
 	testGame =
 		polo_jeans.testGame div
 
 	#testGame.play test_state
-	testGame.play pong.startState
+	testGame.play test.test # pong.startState
 
 err = (error) ->
 	console.trace()
@@ -29,4 +29,4 @@ TEST = no
 if TEST
 	require ['./test'], ((test) -> test()), err
 else
-	require ['polo-jeans',  './Pong/index'], use, err
+	require ['polo-jeans',  './Pong/index', './Test/index'], use, err

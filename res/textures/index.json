@@ -138,5 +138,31 @@
 				"frames": [0]
 			}
 		}
+	},
+
+
+	{
+		"name": "Player.png",
+		"type": "animated",
+		"width": 1,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 0,
+				"frames": [0]
+			}
+		}
+	},
+	{
+		"name": "Enemy.png",
+		"type": "animated",
+		"width": 4,
+		"height": 1,
+		"animation": {
+			"idle": {
+				"delay": 8,
+				"frames": [0, 1, 2, 1]
+			}
+		}
 	}
 ]
