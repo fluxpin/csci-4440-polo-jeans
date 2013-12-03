@@ -1,13 +1,17 @@
 define (require) ->
 	{ PlayState } = require 'GameState'
-	{ Controller, ListensToControl, MoveSprite } = require 'GameObject'
+	{ HasSounds, Sprite } = require 'GameObject'
 	Player = require './Player'
 	Vec2 = require 'Vec2'
 
-	class Enemy extends MoveSprite
+	class NoiseMaker extends Sprite
+		@does HasSounds
+
 		constructor: ->
 			super()
-			@warp new Vec2 200, 0
+
+			@addSound 'win', 'res/sounds/win.ogg'
+			@playSound 'win'
 
 		animationSize: ->
 			[64, 64]
@@ -24,12 +28,11 @@ define (require) ->
 
 
 
-	class Test4 extends PlayState
+	class Test3 extends PlayState
 		constructor: ->
 			super 512, 512
 
-			@addObject new Controller
-			@addObject new Player
-			@addObject new Enemy
+			@addObject new NoiseMaker
 
 			@camera.lookAt Vec2.zero()
+

@@ -142,7 +142,7 @@
 
 
 	{
-		"name": "Player.png",
+		"name": "Enemy.png",
 		"type": "animated",
 		"width": 1,
 		"height": 1,
@@ -154,7 +154,7 @@
 		}
 	},
 	{
-		"name": "Enemy.png",
+		"name": "Player.png",
 		"type": "animated",
 		"width": 4,
 		"height": 1,
