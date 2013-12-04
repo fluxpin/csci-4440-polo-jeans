@@ -1,13 +1,13 @@
 define (require) ->
-	PlayState = (require 'GameState').PlayState
 	GameState = require 'GameState'
+	{ PlayState } = GameState
 	Ball = require '../Objects/Ball'
 	Paddle = require '../Objects/Paddle'
 	Win = require './Win'
 	ImageObject = require '../Objects/ImageObject'
 	PauseToggle = require '../Objects/PauseToggle'
 	ScoreKeeper = require '../Objects/ScoreKeeper'
-	Controller = (require 'GameObject').Controller
+	{ Controller, Timer } = require 'GameObject'
 
 	###
 	A state that plays the Pong game.
@@ -20,6 +20,7 @@ define (require) ->
 				paddleMargin = 64
 				@addObject new ImageObject 'Arena.png', -3, 1024, 1024
 				@addObject new Controller
+				@addObject new Timer
 				@addObject ball = new Ball
 				@addObject new Paddle yes, 'wasd'
 				@addObject new Paddle no, 'arrows'

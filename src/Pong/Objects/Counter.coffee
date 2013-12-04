@@ -3,7 +3,7 @@ define (require) ->
 	{ Sprite, HasSounds } = GameObject
 	Vec2 = require 'Vec2'
 
-	winScore = 10
+	winScore = 5
 
 	###
 	Class: Counter
@@ -39,7 +39,10 @@ define (require) ->
 		increase: ->
 			@count += 1
 			@playSound 'score'
-			if @count >= winScore
+			win = @count >= winScore
+			if win
 				@gameState().win @name
 			else
 				@ani @count.toString()
+
+			win

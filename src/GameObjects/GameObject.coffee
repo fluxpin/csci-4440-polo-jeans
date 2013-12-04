@@ -51,8 +51,7 @@ define ['require', 'GameState'], (require, GameState) ->
 
 		###
 		Method: the
-		Fetches the Unique object of this type, if it exits.
-		Otherwise returns undefined.
+		Fetches the Unique object of this type.
 		###
 		the: (type) ->
 			@gameState().uniqueServer.the type

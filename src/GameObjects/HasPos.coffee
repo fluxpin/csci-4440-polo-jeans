@@ -72,6 +72,7 @@ define (require) ->
 		(Must be smaller than it.)
 		###
 		moveInside: (rect) ->
+			type rect, Rect
 			@pos().moveInside rect.smallerBy @size()
 
 		###

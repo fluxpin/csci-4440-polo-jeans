@@ -11,7 +11,10 @@ define (require) ->
 	GO.Sprite = require 'GameObjects/Sprite'
 	GO.MoveSprite = require 'GameObjects/MoveSprite'
 	GO.HasSounds = require 'GameObjects/HasSounds'
+	GO.HasState = require 'GameObjects/HasState'
 	GO.Controller = require 'GameObjects/Controller'
 	GO.Camera = require 'GameObjects/Camera'
+	GO.Timer = require 'GameObjects/Timer'
+	GO.UsesTimers = require 'GameObjects/UsesTimers'
 
 	GO

@@ -22,6 +22,7 @@ define (require) ->
 		###
 		Method: ScoreLeft
 		One more point for the left player.
+		Returns whether they won.
 		###
 		scoreLeft: ->
 			@_score @left
@@ -29,6 +30,7 @@ define (require) ->
 		###
 		Method: ScoreRight
 		One more point for the right player.
+		Returns whether they won.
 		###
 		scoreRight: ->
 			@_score @right

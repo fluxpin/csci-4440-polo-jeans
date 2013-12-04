@@ -1,5 +1,5 @@
 define (require) ->
-	{ MoveSprite, ListensToControl, HasSounds } = require 'GameObject'
+	{ HasSounds, ListensToControl, MoveSprite } = require 'GameObject'
 	Vec2 = require 'Vec2'
 	Rect = require 'Rect'
 
@@ -41,7 +41,8 @@ define (require) ->
 
 			@addSound 'bounce', "res/sounds/bounce-#{controlType}.wav"
 
-		animationSize: -> [48, 256]
+		animationSize: ->
+			[48, 192]
 
 		_makeBoundRect: (isLeft) ->
 			marginX = 128

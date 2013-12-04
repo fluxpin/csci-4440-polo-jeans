@@ -1,47 +1,10 @@
 define (require) ->
 	{ PlayState } = require 'GameState'
 	GameObject = require 'GameObject'
-	{ MoveSprite } = GameObject
+	{ MoveSprite, Timer } = GameObject
 	Player = require './Player'
 	Vec2 = require 'Vec2'
 	Rect = require 'Rect'
-
-	class TimerEvent
-		constructor: (@time, @event) ->
-			type @time, Number
-			type @event, Function
-			null
-
-
-
-	class Timer extends GameObject
-		@unique()
-
-		constructor: ->
-			@events = []
-			@time = 0
-
-		add: (time, event) ->
-			@events.push new TimerEvent @time + time, event
-
-			@events.sort (a, b) ->
-				a.time - b.time
-
-		repeat: (time, event) ->
-			check time > 0
-
-			x = =>
-				event()
-				@add time, x
-
-			@add time, x
-
-		step: ->
-			while @events.length > 0 and @events[0].time == @time
-				@events[0].event()
-				@events.shift()
-
-			@time += 1
 
 
 
