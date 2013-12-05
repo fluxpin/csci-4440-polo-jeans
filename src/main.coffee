@@ -11,27 +11,33 @@ requirejs.config
 		Vec2: './Vec2'
 		Rect: './Rect'
 
+GAME =
+	'pong' # 'test' # 'myGame'
+
+# Turn this on to have Jasmine run tests (no game)
+TEST = no
+
 use = (poloJeans, pong, test, myGame) ->
 	div =
 		document.getElementById 'test-game'
 	testGame =
 		poloJeans.testGame div
 
-	#testGame.play test_state
-
 	# TO PLAY PONG:
 	startState =
-		pong.startState #to play pong
-		#test.test # to run a test
-		#myGame.startState # for my game
+		switch GAME
+			when 'pong'
+				pong.startState
+			when 'test'
+				test.test
+			when 'myGame'
+				myGame.startState
 
 	testGame.play startState
 
 err = (error) ->
 	console.trace()
 	throw error
-
-TEST = no
 
 if TEST
 	require ['./test'], ((test) -> test()), err

@@ -15,6 +15,7 @@ define (require) ->
 	GO.Controller = require 'GameObjects/Controller'
 	GO.Camera = require 'GameObjects/Camera'
 	GO.Timer = require 'GameObjects/Timer'
+	GO.Unique = require 'GameObjects/Unique'
 	GO.UsesTimers = require 'GameObjects/UsesTimers'
 
 	GO

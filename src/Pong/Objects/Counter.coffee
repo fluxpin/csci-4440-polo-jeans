@@ -24,7 +24,7 @@ define (require) ->
 			super()
 			@setLayer 5
 			@count = 0
-			y = @gameState().height()/2 - @animationSize()[1]/2
+			y = (@gameState().height() - @animationSize()[1]).half()
 			@warp new Vec2 x, y
 
 			@addSound 'score', "res/sounds/score-#{@name}.ogg"

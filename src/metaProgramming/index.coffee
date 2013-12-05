@@ -3,4 +3,3 @@ define (require) ->
 	require 'metaProgramming/trait'
 	require 'metaProgramming/TraitMergingData'
 	require 'metaProgramming/traitTest'
-	require 'metaProgramming/unique'

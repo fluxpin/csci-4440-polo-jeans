@@ -1,5 +1,6 @@
 define (require) ->
 	GameObject = require 'GameObject'
+	{ Unique } = GameObject
 	Counter = require './Counter'
 
 	###
@@ -8,7 +9,7 @@ define (require) ->
 	Is Unique.
 	###
 	class ScoreKeeper extends GameObject
-		@unique()
+		@does Unique
 
 		###
 		Constructor: ScoreKeeper

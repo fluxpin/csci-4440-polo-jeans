@@ -1,5 +1,6 @@
 define (require) ->
 	GameObject = require './GameObject'
+	Unique = require './Unique'
 
 	keyNameToCode =
 		backspace: 8
@@ -92,7 +93,7 @@ define (require) ->
 	Is Unique.
 	###
 	class Controller extends GameObject
-		@unique()
+		@does Unique
 
 		###
 		Constructor: Controller

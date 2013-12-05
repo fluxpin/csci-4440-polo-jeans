@@ -47,10 +47,10 @@ define (require) ->
 		_makeBoundRect: (isLeft) ->
 			marginX = 128
 			marginY = 32
-			top = @gameState().height()/2 - marginY
+			top = @gameState().height().half() - marginY
 			bottom = -top
 
-			x = @gameState().width()/2 - marginX
+			x = @gameState().width().half() - marginX
 
 			[left, right] =
 				if isLeft

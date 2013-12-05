@@ -1,5 +1,6 @@
 define (require) ->
 	require 'meta'
+	{ Unique } = require 'GameObject'
 
 	###
 	Class: UniqueConflictError
@@ -71,7 +72,7 @@ define (require) ->
 	describe 'UniqueServer', ->
 		it 'works simple', ->
 			class A
-				@unique()
+				@does Unique
 			us =
 				new UniqueServer
 			a =
@@ -87,9 +88,9 @@ define (require) ->
 
 		it 'works with multiple unique types', ->
 			class House
-				@unique()
+				@does Unique
 			class RocketShip
-				@unique()
+				@does Unique
 			class RocketHouse extends House
 				@does RocketShip
 			us =

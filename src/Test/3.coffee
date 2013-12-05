@@ -1,10 +1,11 @@
 define (require) ->
 	{ PlayState } = require 'GameState'
-	{ HasSounds, Sprite } = require 'GameObject'
+	GameObject = require 'GameObject'
+	{ HasSounds } = GameObject
 	Player = require './Player'
 	Vec2 = require 'Vec2'
 
-	class NoiseMaker extends Sprite
+	class NoiseMaker extends GameObject
 		@does HasSounds
 
 		constructor: ->
@@ -12,19 +13,6 @@ define (require) ->
 
 			@addSound 'win', 'res/sounds/win.ogg'
 			@playSound 'win'
-
-		animationSize: ->
-			[64, 64]
-
-		step: ->
-			super()
-
-			@eachColliding Player, =>
-				@die()
-
-			#Alternate
-			#if @collides @the Player
-			#	@die()
 
 
 

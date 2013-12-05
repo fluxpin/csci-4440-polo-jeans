@@ -1,5 +1,6 @@
 define (require) ->
 	GameObject = require './GameObject'
+	Unique = require './Unique'
 
 	class TimerEvent
 		constructor: (@time, @event) ->
@@ -10,7 +11,7 @@ define (require) ->
 
 
 	class Timer extends GameObject
-		@unique()
+		@does Unique
 
 		constructor: ->
 			@events = []

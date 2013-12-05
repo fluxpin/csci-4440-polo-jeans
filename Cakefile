@@ -19,7 +19,7 @@ build =
 	run 'coffee  --compile --bare --output js src'
 
 lint =
-	run 'coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee'
+	run 'coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee src/*/*/*.coffee'
 
 readyDoc =
 	run 'mkdir doc doc/project'

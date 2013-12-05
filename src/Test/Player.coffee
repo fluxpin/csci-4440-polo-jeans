@@ -1,10 +1,9 @@
 define (require) ->
-	{ ListensToControl, MoveSprite } = require 'GameObject'
+	{ ListensToControl, MoveSprite, Unique } = require 'GameObject'
 	Vec2 = require 'Vec2'
 
 	class Player extends MoveSprite
-		@unique()
-		@does ListensToControl
+		@does ListensToControl, Unique
 
 		animationSize: ->
 			[128, 128]
