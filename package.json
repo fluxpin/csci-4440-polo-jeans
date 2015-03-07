@@ -1,0 +1,12 @@
+{
+	"name": "polo-jeans",
+	"license": "public domain",
+	"private": true,
+	"version": "0.0.0",
+	"dependencies": {
+	},
+	"devDependencies": {
+		"coffeelint": "1.9.2",
+		"coffee-script": "1.9.1"
+	}
+}

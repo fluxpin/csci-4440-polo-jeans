@@ -16,10 +16,10 @@ clean =
 	run 'rm -rf doc js'
 
 build =
-	run 'coffee  --compile --bare --output js src'
+	run 'node_modules/coffee-script/bin/coffee  --compile --bare --output js src'
 
 lint =
-	run 'coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee src/*/*/*.coffee'
+	run 'node_modules/coffeelint/bin/coffeelint -f script/lintConfig.json src/*.coffee src/*/*.coffee src/*/*/*.coffee'
 
 readyDoc =
 	run 'mkdir doc doc/project'

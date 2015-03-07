@@ -294,5 +294,5 @@ Language: CoffeeScript
    Package Separator: .
    Function Prototype Ender: \n
    Variable Prototype Ender: \n
-   Class Method Prototype Ender: \n
    Method Prototype Ender: \n
+   Class Method Prototype Ender: \n
