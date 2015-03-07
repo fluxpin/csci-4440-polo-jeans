@@ -111,12 +111,12 @@ define (require) ->
 				when 32, 37, 38, 39, 40
 					event.preventDefault()
 			@currentlyPressedKeys[event.keyCode] = yes
-			@listeners.forEach (listener) =>
+			@listeners.forEach (listener) ->
 				listener.onButtonDown keyCodeToName[event.keyCode]
 
 		_keyUp: (event) ->
 			@currentlyPressedKeys[event.keyCode] = no
-			@listeners.forEach (listener) =>
+			@listeners.forEach (listener) ->
 				listener.onButtonUp keyCodeToName[event.keyCode]
 
 		###
